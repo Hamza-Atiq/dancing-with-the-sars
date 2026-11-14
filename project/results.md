@@ -177,3 +177,5 @@ The Langtang flag survives every variant except a larger minimum flag size (80 p
 2. Unwrap reporting rule tightened to require a readable pair (section 2). Conservative.
 3. Anomaly image opacity and resolution, for display only. No effect on numbers.
 4. Per-pair control ranking added after the winter values appeared (section 2), to put them in context. No detector setting was changed after the year-long run.
+
+Provenance of item 1 and of "no change after the year-long run": this is the project's own record. The shipped JSON files hold only the final settings, and git does not prove the order either: the commit intended to capture the freeze did not include `pipeline/params.json`, so the frozen file first appears in commit `4eb4ad5` together with the year-long results. What can be checked: section 1 lists the calibration trials with their outputs, the sensitivity table in section 5 shows what the original setting (two quiet earlier pairs) gives on the full year (184 flags, none on Langtang), and Codex's independent recomputation used the frozen file.

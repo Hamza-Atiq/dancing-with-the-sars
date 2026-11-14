@@ -53,7 +53,7 @@ The background removes long-wavelength atmosphere and ionosphere. It does not re
 ### 4.2 Detector ("new movement")
 A pixel is **flagged** in pair *k* when all hold:
 1. measurable in pair *k* and |a| ≥ 1.5 rad (2.9 cm);
-2. **quiet history:** in the previous four pairs it was measurable in at least two, and |a| < 0.75 rad in every pair where it was measurable.
+2. **quiet history:** in the previous four pairs it was measurable in at least one (originally two; changed during calibration, see §8 and `project/results.md` section 1), and |a| < 0.75 rad in every pair where it was measurable.
 Flagged pixels are grouped into connected blobs; blobs of at least 40 pixels (0.016 km²) are **flags**. Each flag records date, centroid, area, mean |a|, and how many consecutive pairs it persists.
 
 **Calibration and freeze.** The rule is calibrated on the six pairs 8 Jun – 31 Aug only (`pipeline/calibrate.py`, results in `project/results.md`): it must be shown what it does at the measured Langtang patch in 14–26 Jul with these exact boxes and thresholds, since the detector is not the same calculation as the fixed patch/reference measurement. Thresholds may be adjusted in this step and every tried setting is recorded. The rule is then frozen and the year-long evaluation is run once. Because the rule is calibrated on Langtang, its detection of Langtang is not an independent test; the independent information is what else it flags.
@@ -87,7 +87,7 @@ Sections on one page:
 5. **What this does not show.** The limits from sections 2 and 4.2, in plain words.
 6. **Method and sources.** Links to the repo records and data sources.
 
-Requirements: readable on a phone (map above, panels below); keyboard-operable slider; colour scales with legends and units; every number shown comes from a pipeline JSON file, none typed by hand; total size under 30 MB.
+Requirements: readable on a phone (map above, panels below); keyboard-operable slider; colour scales with legends and units; every result value shown comes from a pipeline JSON file, none typed by hand (fixed identifiers of the case, such as the dates 14–26 July and 26 August, and product constants such as the 20 m grid, are written in the text); total size under 30 MB.
 
 Wording rules: "phase step equivalent to X cm along the line of sight" not "moved X cm"; no proven onset date, direction or lead time; pairs processed after the event are labelled; "line-of-sight change" not "displacement" or "sinking"; "flag" not "warning" or "alert"; no casualty figures; no claim about what authorities could have done.
 

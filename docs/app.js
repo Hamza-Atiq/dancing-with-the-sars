@@ -257,7 +257,7 @@
       const a = Object.values(key.refs).filter(Boolean).map((v) => Math.abs(v.los_cm));
       kids.push(h('p', {}, h('strong', {}, `Between 14 and 26 July 2026, a small patch of the slope shows a phase step equivalent to about ${Math.min(...a).toFixed(1)}–${Math.max(...a).toFixed(1)} cm along the radar line of sight. `),
         before && before.resolved ? `In the pass before (2–14 July) the same patch shows ${Math.abs(before.refs['west block'].los_cm).toFixed(1)} cm against the same reference. ` : '',
-        c && c.n_controls ? `None of ${c.n_controls} comparable slopes nearby shows such a step. ` : '', 'The slope collapsed on 26 August.'));
+        c && c.n_controls ? `None of ${c.n_controls} comparable slopes nearby that are readable in both passes shows such a step. ` : '', 'The slope collapsed on 26 August.'));
     }
     if (ev && ev.has_history) kids.push(h('p', {}, `Run on every pass, a simple "new movement" rule raises ${ev.flags} flag${ev.flags === 1 ? '' : 's'} in the ${D.evaluation.window_km2.toFixed(0)} km² window for that pair; ${ev.flags_at_langtang} ${ev.flags_at_langtang === 1 ? 'is' : 'are'} on this slope.`));
     kids.push(h('p', {}, 'This is a pattern in public NISAR products that matches a published analysis. It is not a validated measurement of ground movement and not a warning system. See the limits below.'));
