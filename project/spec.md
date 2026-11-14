@@ -108,3 +108,12 @@ Python: Anaconda with numpy, scipy, PIL, h5py only (matplotlib, pandas, rasterio
 - Pipeline reproduces the verification numbers (2–14 Jul about 0.6 cm, 14–26 Jul about −5.6 cm against the west block).
 - App loads without console errors, slider and layers work, every evaluation number in 4.3 is displayed whether favourable or not.
 - Results recorded in `project/results.md`; `HANDOFF.md` updated.
+
+## 8. Changes made during the build (v2 → as built)
+
+- §4.2: `min_history_measurable` is 1, not 2 (calibration, `project/results.md` section 1). Parameters frozen in `pipeline/params.json`.
+- §4.4: a number from the unwrapping attempt is reported only if the pair is also readable by the consistency rule. Per-pair control ranking added.
+- §4.3: negative controls implemented as boxes of the patch size on a 1 km grid (`pipeline/series.py`).
+- §5: Leaflet is vendored in `docs/vendor` instead of loaded from cdnjs. Anomaly and coherence images are stored at 40 m; wrapped phase at 20 m. Images are WebP.
+- §5: the chart also shows, per readable pair, the level 95% of control slopes stay below.
+- §6: added `pipeline/calibrate_try.py`, `pipeline/write_results.py`, `tests/test_real.py`.
