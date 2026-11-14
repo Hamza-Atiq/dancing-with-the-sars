@@ -5,7 +5,7 @@ Research notes and scripts for our entry in the NASA Space Apps 2026 challenge "
 ## Where we are (14 Nov 2026)
 
 - **Working project:** the Langtang Lirung ice-rock collapse in Nepal on 26 Aug 2026. Question: could NISAR have seen the slope moving beforehand, and can the same method flag other slopes?
-- **Status:** data extraction for the before-and-after and pre-collapse tests is in progress. No result yet.
+- **Status:** all 18 original extracts are complete. Local backscatter changes increase across the collapse within a UNOSAT-mapped detachment boundary. Processing-version, phase-quality, descending-view and offset tests are documented; the published precursor has not been independently reproduced. See `Langtang local verification - Codex.md`.
 - **Paused:** Quetta groundwater subsidence. The first nine-pair stack was dominated by atmospheric noise as large as the expected signal.
 - **Fallbacks:** a world glacier speed atlas; water extent at Manchar Lake.
 
@@ -16,6 +16,8 @@ Research notes and scripts for our entry in the NASA Space Apps 2026 challenge "
 | File | What it is |
 |---|---|
 | `HANDOFF.md` | Current decision, running jobs, next steps, tooling notes |
+| `Langtang local verification - Codex.md` | Independent boundary, local results, version and mask audit, reproducible checks and remaining limits |
+| `Langtang continuation - Codex.md` | Initial extraction inventory and whole-window baseline |
 | `Langtang collapse - Claude.md` | Event facts, reported precursors, NISAR coverage at the site, tests under way |
 | `Glacier research - Claude.md` | Coverage at 16 glaciers worldwide, first ice-motion numbers, 2026 glacier events, Codex's verification |
 | `Quetta deep dive and alternatives - Claude.md` | Every NISAR product over Quetta, preview findings, published ground truth, other directions considered |
