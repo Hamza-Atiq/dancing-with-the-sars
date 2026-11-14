@@ -4,34 +4,41 @@ Research notes and scripts for our entry in the NASA Space Apps 2026 challenge "
 
 ## Where we are (14 Nov 2026)
 
-- **Proposed idea, not final:** an interactive map of how fast Quetta is sinking from groundwater over-pumping, measured with NISAR interferograms and linked to the electric and solar tubewells that drive the pumping.
-- **Fallback:** surface-water extent at Manchar Lake and along the Indus.
-- **Data test in progress:** stacking nine 12-day interferograms on track 041 to see whether the Quetta sinking bowl appears. No result yet.
+- **Working project:** the Langtang Lirung ice-rock collapse in Nepal on 26 Aug 2026. Question: could NISAR have seen the slope moving beforehand, and can the same method flag other slopes?
+- **Status:** data extraction for the before-and-after and pre-collapse tests is in progress. No result yet.
+- **Paused:** Quetta groundwater subsidence. The first nine-pair stack was dominated by atmospheric noise as large as the expected signal.
+- **Fallbacks:** a world glacier speed atlas; water extent at Manchar Lake.
 
-## Read in this order
+**Start with `HANDOFF.md`** for the current state and next steps.
+
+## Files
 
 | File | What it is |
 |---|---|
-| `Independent verification - Claude.md` | Check of all 14 challenge resources against the live pages, plus NISAR coverage over Pakistan from NASA's CMR catalogue |
-| `Quetta deep dive and alternatives - Claude.md` | Every NISAR product over the Quetta valley, what the preview images show, published ground truth, and the other directions considered |
-| `Dancing with the SARs - resource review.md` | Codex's original resource review (some statements are corrected in the file above) |
+| `HANDOFF.md` | Current decision, running jobs, next steps, tooling notes |
+| `Langtang collapse - Claude.md` | Event facts, reported precursors, NISAR coverage at the site, tests under way |
+| `Glacier research - Claude.md` | Coverage at 16 glaciers worldwide, first ice-motion numbers, 2026 glacier events, Codex's verification |
+| `Quetta deep dive and alternatives - Claude.md` | Every NISAR product over Quetta, preview findings, published ground truth, other directions considered |
+| `Independent verification - Claude.md` | Check of the 14 challenge resources and NISAR coverage over Pakistan |
+| `Dancing with the SARs - resource review.md` | Codex's original resource review |
 | `Quetta deep dive - independent verification.md` | Codex's cross-check of the Quetta findings |
 | `NISAR beginner notes.md` | Short primer on the NISAR products |
-| `previews/` | Contact sheets cut from NASA's public browse images: interferograms around Quetta (`sheet_*`) and backscatter time strips for other sites (`gcovsheet_*`) |
-| `scripts/` | The Python used to produce the numbers and images |
+| `previews/` | Images cut from public browse files and first processing outputs |
+| `scripts/` | The Python behind the numbers and images |
 
 ## Scripts
 
-All scripts use only public endpoints except `subset.py`, which reads NISAR science files and needs an Earthdata Login.
+Catalogue scripts use only public endpoints. Scripts marked "login" read NISAR science files and need an Earthdata Login.
 
 | Script | Purpose |
 |---|---|
-| `cmr.py` | Granule counts per NISAR collection, globally and over Pakistan |
-| `pk.py` | Monthly coverage and repeat stacks at seven Pakistani sites |
-| `quetta.py` | Full product list over the Quetta valley, by track and date |
-| `crop2.py`, `gcovsheet.py` | Build the preview contact sheets from public browse images |
-| `nisar_io.py`, `utm.py` | Helpers: remote HDF5 reads over HTTPS, lat/lon to UTM |
-| `subset.py` | Cut a 100 km window around Quetta out of each interferogram without downloading the full 2.3 GB file |
+| `cmr.py`, `pk.py`, `quetta.py` | Granule counts and repeat stacks: global, Pakistan, Quetta |
+| `glac.py`, `events.py` | Coverage at 16 glaciers; coverage around the Langtang and Juneau events |
+| `crop2.py`, `gcovsheet.py`, `glacbrowse.py` | Contact sheets from public browse images |
+| `nisar_io.py`, `utm.py` | Remote HDF5 reads over HTTPS; UTM and polar stereographic transforms |
+| `subset.py`, `subset_atm.py`, `stack.py` | Quetta: cut interferogram windows and correction cubes, stack them (login) |
+| `goffread.py` | Read ice-motion offsets and compute speed for a glacier (login) |
+| `lang_gcov.py`, `lang_pairs.py` | Langtang: full-resolution backscatter windows; interferogram and offset windows (login) |
 
 They were written as working scripts and run from one folder; paths are relative.
 
@@ -43,12 +50,13 @@ They were written as working scripts and run from one folder; paths are relative
    machine urs.earthdata.nasa.gov login YOUR_USERNAME password YOUR_PASSWORD
    ```
 
-Never commit credentials. `.netrc` is listed in `.gitignore` as a safeguard.
+Never commit credentials. `.netrc` and `data/` are listed in `.gitignore`.
 
 ## Key facts established so far
 
-- Pakistan has 1,978 Provisional GCOV scenes and 1,676 Provisional GUNW pairs (Oct 2025 – Oct 2026); dense 12-day imaging starts mid-June 2026.
-- The Validated GUNW collection has no coverage of Pakistan; use `NISAR_L2_GUNW_PROVISIONAL_V1`.
-- Quetta has 52 GUNW pairs on four tracks (041 and 142 ascending, 092 and 020 descending), 17 Jun – 18 Oct 2026.
+- Pakistan has 1,978 Provisional GCOV scenes and 1,676 Provisional GUNW pairs; dense 12-day imaging starts mid-June 2026.
+- Validated collections start on 21 Oct 2026 and have almost no interferometric pairs; use the Provisional collections for anything earlier.
 - A permanent instrument gap runs from 27 Jul to 10 Aug 2026.
-- Published rates for central Quetta are 12–16.6 cm per year (Kakar et al. 2024; Natural Hazards 2025). Taken from abstracts.
+- 15 of 16 well-known glaciers tested have the GOFF ice-motion product.
+- Langtang has a year-long record on track 098 A 016 (27 dates, Nov 2025 – Oct 2026), passes on 19 Aug and 31 Aug bracketing the collapse, and Urgent Response scenes from 28 Aug.
+- Reported by ICIMOD: satellite radar showed up to 30 cm of slope movement in the 3–4 weeks before the collapse. Not yet reproduced by us.
