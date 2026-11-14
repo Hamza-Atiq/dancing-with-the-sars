@@ -1,59 +1,47 @@
-# Handoff — state at end of session, 14 Nov 2026
+# Handoff — state on 15 Nov 2026
 
-Read this first when resuming. It says what is decided, what is running, and the exact next steps.
+Read this first when resuming. Then `project/spec.md`, `project/plan.md`, `project/progress.md` (running log), `project/results.md` (all numbers).
 
-**Latest Claude update (supersedes the Codex conclusion below): read `Langtang verification - Claude.md` first.** The published precursor IS visible in the standard 20 m wrapped interferograms: a ~0.06 km² patch in the south-east of the UNOSAT polygon shows no movement 2–14 July, about 5.6 cm line-of-sight in 14–26 July, and more than one fringe in 26 July–19 August. Codex missed it because its coherence ≥ 0.6 / connected-component filter removed the moving ground. Codex's backscatter numbers are confirmed and now have a 97-position control test. Next steps are in the "Path forward" section of that file. Scripts: `scripts/verify_*.py`; images: `previews/lang_verify_*.png`.
+## What exists
 
-Earlier Codex update: read **Langtang local verification - Codex.md** before resuming. All 18 original extracts are complete. Analysis using a downloaded UNOSAT detachment polygon finds increased backscatter change across the collapse, but has not reproduced the published precursor. Explicit processing-version and validity-mask checks are available. Scripts, numerical outputs and review instructions are saved for independent verification. No application has been built.
+**SlopeWatch**: a reproducible analysis plus a static web app about the Langtang Lirung collapse (Nepal, 26 Aug 2026).
 
-Key results: HH pixels with absolute change >3 dB increase from 18.55% in July 14–26 to 41.22% in August 19–31 within the mapped polygon, using the same valid pixels. The three old ascending precursor extracts match X05026 exactly over the review crop; P05023 gives nearly identical diagnostic results. Only 19 of 307 source-area pixels meet coherence >=0.6 and component checks across the three benchmark intervals. Descending July 11–23 and August 16–28 have no valid source-area samples after subswath masking; July 23–August 16 has valid coverage. A second-angle acceleration time series is not established.
+- App: `docs/` (static; `cd docs && python -m http.server 8765`, open http://127.0.0.1:8765/). Data for the app is in `docs/data` and is committed. Could be served by GitHub Pages from `/docs` (not enabled; needs the repo owner).
+- Pipeline: `pipeline/build.py` regenerates `docs/data` from `data/` (about 8 minutes). `pipeline/write_results.py` regenerates the numeric sections of `project/results.md`.
+- Tests: `python -m pytest tests -q` (19 tests; real-data tests skip if `data/` is absent).
+- Raw extracts: `data/` (not in git). `data/series/` holds 34 interferogram windows fetched by `scripts/series_fetch.py`.
+- Python: `C:/Users/HP/anaconda3/python.exe` (numpy, scipy, PIL, h5py work; matplotlib, pandas, skimage, rasterio, pyproj do not).
 
-## Decision
-- **Working project: Langtang Lirung collapse, Nepal, 26 Aug 2026.** Question: could NISAR have seen it coming, and where else is a slope doing the same thing now?
-- **Quetta subsidence: paused** at the user's request. First test was inconclusive (see below).
-- **Fallbacks:** world glacier speed atlas from GOFF; Manchar Lake water extent.
+## Results in brief (details and caveats in `project/results.md`)
 
-## Proposed project shape (not yet confirmed by results)
-1. Reconstruct slope and glacier movement on the north face of Langtang Lirung from the year-long NISAR record up to 19 Aug 2026.
-2. Compare with the published precursor: more than one foot of bedrock motion in the month before failure (University of Washington account of **George Brencher**; original “Q. Brencher” attribution corrected).
-3. Map the collapse scar, debris path and barrier lakes from the scenes after 26 Aug.
-4. Generalise into a watch-list tool that flags accelerating ice and rock faces above rivers, hydropower and border crossings, updated on every pass.
+1. **Precursor present in standard products.** In the 20 m wrapped interferogram, a 0.056 km² patch on the slope shows a phase step equivalent to 4.7–5.6 cm line of sight in 14–26 Jul (five references agree), 0.6 cm in 2–14 Jul. It is the only pair in the year in which the patch exceeds every comparable slope (0 of 361). The 80 m unwrapped layer discards the patch; that caused Codex's earlier negative result. Codex has since reproduced the numbers.
+2. **Final 24 days unresolved.** 26 Jul–19 Aug has spatially mixed phase; no value is reported.
+3. **Winter observation, open.** The patch was readable in nine pairs from 28 Nov to 16 Mar with steps of 0.2–2.3 cm, mostly one sign, above the controls' 95% level in four pairs but never above all controls. Could be slow movement, snow, or topographic residual. Not claimed as a finding.
+4. **Detector.** A "new movement" rule (frozen after calibration on Langtang) run over 22 pairs flags Langtang in exactly one pair (14–26 Jul) and raises 270 flags in total (median 6.5 per pass); the other 268 are unverified and cluster in spring and autumn.
+5. **Collapse.** Backscatter change inside the UNOSAT polygon rises from 18.6% to 41.2% of pixels; 97 control areas rise by at most 8.5 points.
+6. **No second look direction.** Descending track has valid data over the patch in one of eight pairs, and it is not readable there.
 
-The key pair July 26–August 19 spans 24 days. The local source-area CMR query returns tracks 098 and 048; 149 was not returned. Do not claim a four-day usable monitoring cadence. Actual masks further reduce usable observations. A retrospective surface-change result does not establish warning lead time.
+## What is not established
 
-## Historical extraction jobs (complete; table retained for provenance)
-Both write to the session scratchpad, which may be cleaned up. Files finished so far were copied to `data/lang/`.
+Ground movement as the cause of the phase step; direction and true size; onset date; anything about lead time or availability of products at the time; meaning of the other flags; performance anywhere else. The rule was tuned on Langtang, so its Langtang flag is not an independent detection.
 
-| Job | Script | Finished at handoff | Still to come |
-|---|---|---|---|
-| Full-resolution GCOV windows (10 m, HHHH and HVHV), track 098 A 016 | `scripts/lang_gcov.py` | 14 Jul, 26 Jul, 19 Aug | 31 Aug, 12 Sep, 24 Sep |
-| GUNW phase and GOFF offsets, track 098 A 016 | `scripts/lang_pairs.py` | GUNW pairs starting 2 Jul, 14 Jul, 26 Jul, 19 Aug | GUNW pairs starting 8 Jun, 20 Jun; all six GOFF pairs |
+## Suggested next steps (none started)
 
-Both scripts skip files that already exist, so re-running them from a folder containing `lang/` completes the set. Window: 85.33–85.62 E, 28.20–28.37 N.
+1. **Independent test of the frozen rule** on a second, unrelated slope failure or a known slow landslide with NISAR coverage. This is what would make the watch-list idea credible.
+2. Look at a sample of the 268 other flags against optical imagery to classify them (glacier margin, snow, real movement).
+3. Follow up the winter observation: same patch measurement with a terrain model to test elevation-correlated phase; compare with snow data.
+4. Quantify 26 Jul–19 Aug with proper unwrapping or offsets from higher-resolution products (RSLC/GSLC).
+5. Enable GitHub Pages for `docs/`, update the team brief artifact (https://claude.ai/artifact/4VJB2yVSicxijtiRJvZFQ5 still describes Quetta), prepare the submission text and demo video.
 
-## Next steps, in order
-1. Independently reproduce the saved polygon, backscatter, GUNW-mask, provenance and offset checks in `Langtang local verification - Codex.md`.
-2. Resolve the precise moving-bedrock footprint and obtain the original precursor processing recipe or an equivalent independent analysis. The broad UNOSAT polygon and automatic 80 m GUNWs do not reproduce the published map.
-3. If continuing deformation research, validate terrain visibility, stable reference terrain, atmospheric/tidal corrections, unwrapping and physical phase sign. Existing phase-equivalent rates are diagnostics only.
-4. Validate spatially matched controls and additional pre-event comparison intervals for backscatter. July 14–26 is a comparison interval, not known motionless ground.
-5. Choose the app scope with the user based on demonstrated capabilities. A retrospective event/change-and-quality explorer is currently better supported than a warning system. Do not turn conditional research results into hazard predictions.
+## Decisions on record
 
-## Access and tooling
-- Earthdata Login works through `C:\Users\HP\.netrc` (in the home folder, not in the repo).
-- `scripts/nisar_io.py` opens NISAR HDF5 files remotely with range requests; no full downloads needed. A 30 km window takes about 3–4 minutes per file.
-- `scripts/utm.py` has UTM and polar stereographic transforms (`ll2xy`). `pyproj`, `rasterio`, `matplotlib`, `xarray`, `earthaccess` and `asf_search` are not usable in this Python install (matplotlib and pandas are broken by a NumPy 2 mismatch). Images are written with PIL.
-- Historical Claude plugin note: `gpt-6-sol` worked in that session. Codex successfully queried CMR using network escalation during this continuation; the dated responses and query are saved in `data/lang_sources/cmr_candidates.json`.
-- `data/` holds extracted windows (about 700 MB) and is ignored by git.
+- Working project: Langtang. Quetta subsidence paused (nine-pair stack dominated by atmosphere; details in `Quetta deep dive and alternatives - Claude.md`). Fallbacks: glacier speed atlas; Manchar Lake.
+- Wording rules for anything public: "phase step equivalent to X cm along the line of sight", "flag" not "warning", no casualty figures, no claims about what could have been done.
+- Detector parameters are frozen (`pipeline/params.json`). Any change must be recorded in `project/results.md` section 6 with before/after numbers.
 
-## Quetta, where it stopped
-- Nine GUNW pairs on track 041 A 017 stacked (17 Jun → 15 Oct). Background spread 4.7 cm after ionosphere correction; expected signal about 5 cm. The summed map follows topography (stratified troposphere). No bowl distinguishable.
-- Troposphere, tide and geometry cubes for the nine pairs are extracted in `data/atm/`. Applying them needs a terrain model, not yet fetched. Sign convention unverified.
+## Tooling notes
 
-## Verification status
-- Catalogue counts and dates: checked by Claude through CMR; Codex confirmed the Pakistan totals earlier in its own app but could not re-check the glacier and Langtang counts.
-- Event research now includes the University of Washington account, a published NRSC paper's public abstract/figures, a recent preprint and original UNOSAT/DEM records. Casualty figures were not needed for the numerical tests.
-- RGI 7.0 glacier count (274,531): confirmed by Codex.
-- A localized backscatter-change result is documented. The published precursor has not been independently reproduced. See the latest Codex note for completed offset and mask tests. No extraction jobs remain running.
-
-## Published artifact
-Team brief (private until shared): https://claude.ai/artifact/4VJB2yVSicxijtiRJvZFQ5 — it still describes Quetta as the proposed idea and needs updating once the Langtang tests are in.
+- Earthdata Login is in `C:\Users\HP\.netrc` (never print or commit it). `scripts/nisar_io.py` reads NISAR HDF5 remotely.
+- In this environment bash heredocs fail on some content; write scripts to files instead.
+- Codex plugin: model `gpt-6-sol` works; ask for read-only reviews and keep it out of `data/` while jobs run.
+- Earlier records kept for provenance: `Langtang verification - Claude.md`, `Langtang local verification - Codex.md`, `Langtang continuation - Codex.md`, `Langtang collapse - Claude.md`.

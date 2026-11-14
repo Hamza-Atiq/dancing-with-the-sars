@@ -9,7 +9,7 @@
   "flag_abs_anomaly_rad": 1.5,
   "quiet_abs_anomaly_rad": 0.75,
   "history_pairs": 4,
-  "min_history_measurable": 2,
+  "min_history_measurable": 1,
   "min_blob_pixels": 40,
-  "status": "provisional until calibration (plan step 3b)"
+  "status": "FROZEN 15 Nov 2026 after calibration on pairs 3 May - 31 Aug (project/results.md section 1). Do not change without recording a post-hoc change there."
 }

@@ -53,9 +53,10 @@ def anomaly(wrapped, coh, mask=None, params=PARAMS):
         b = Sb / Cb
         lcoh = C5 / N5
     enough = (N5 >= p['min_local_valid'] - 1e-6) & (Nb >= p['min_background_valid_fraction'] * (nb * nb - nl * nl))
-    a = np.angle(s * np.conj(b))
-    cons = np.abs(s)
-    bg = np.abs(b)
+    with np.errstate(all='ignore'):
+        a = np.angle(s * np.conj(b))
+        cons = np.abs(s)
+        bg = np.abs(b)
     a[~enough | ~np.isfinite(a)] = np.nan
     meas = (enough & np.isfinite(a) & (cons >= p['min_consistency'])
             & (lcoh >= p['min_local_coherence']) & (bg >= p['min_background_strength']))

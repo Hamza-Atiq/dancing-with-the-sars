@@ -1,0 +1,178 @@
+{
+ "base": {
+  "pairs_with_history": 22,
+  "total_flags": 270,
+  "flags_at_langtang_total": 2,
+  "pairs_with_langtang_flag": [
+   "20260714_20260726"
+  ],
+  "median_flags_per_pair": 6.5,
+  "max_flags_per_pair": 35,
+  "pre_collapse_pairs_with_history": 17,
+  "pre_collapse_flags_not_at_langtang": 184,
+  "mean_unverified_flags_per_100km2_eligible_per_pass": 4.426594190709337
+ },
+ "variants": [
+  {
+   "parameter": "flag_abs_anomaly_rad",
+   "value": 1.0,
+   "pairs_with_history": 22,
+   "total_flags": 857,
+   "flags_at_langtang_total": 2,
+   "pairs_with_langtang_flag": [
+    "20260714_20260726"
+   ],
+   "median_flags_per_pair": 26.5,
+   "max_flags_per_pair": 112,
+   "pre_collapse_pairs_with_history": 17,
+   "pre_collapse_flags_not_at_langtang": 627,
+   "mean_unverified_flags_per_100km2_eligible_per_pass": 13.779790901845644
+  },
+  {
+   "parameter": "flag_abs_anomaly_rad",
+   "value": 2.0,
+   "pairs_with_history": 22,
+   "total_flags": 110,
+   "flags_at_langtang_total": 1,
+   "pairs_with_langtang_flag": [
+    "20260714_20260726"
+   ],
+   "median_flags_per_pair": 3.0,
+   "max_flags_per_pair": 17,
+   "pre_collapse_pairs_with_history": 17,
+   "pre_collapse_flags_not_at_langtang": 77,
+   "mean_unverified_flags_per_100km2_eligible_per_pass": 1.8634439626331434
+  },
+  {
+   "parameter": "quiet_abs_anomaly_rad",
+   "value": 0.5,
+   "pairs_with_history": 22,
+   "total_flags": 159,
+   "flags_at_langtang_total": 2,
+   "pairs_with_langtang_flag": [
+    "20260714_20260726"
+   ],
+   "median_flags_per_pair": 4.0,
+   "max_flags_per_pair": 25,
+   "pre_collapse_pairs_with_history": 17,
+   "pre_collapse_flags_not_at_langtang": 102,
+   "mean_unverified_flags_per_100km2_eligible_per_pass": 3.0086153653068948
+  },
+  {
+   "parameter": "quiet_abs_anomaly_rad",
+   "value": 1.0,
+   "pairs_with_history": 22,
+   "total_flags": 394,
+   "flags_at_langtang_total": 2,
+   "pairs_with_langtang_flag": [
+    "20260714_20260726"
+   ],
+   "median_flags_per_pair": 12.5,
+   "max_flags_per_pair": 58,
+   "pre_collapse_pairs_with_history": 17,
+   "pre_collapse_flags_not_at_langtang": 287,
+   "mean_unverified_flags_per_100km2_eligible_per_pass": 6.109340902418271
+  },
+  {
+   "parameter": "min_blob_pixels",
+   "value": 20,
+   "pairs_with_history": 22,
+   "total_flags": 635,
+   "flags_at_langtang_total": 2,
+   "pairs_with_langtang_flag": [
+    "20260714_20260726"
+   ],
+   "median_flags_per_pair": 22.0,
+   "max_flags_per_pair": 86,
+   "pre_collapse_pairs_with_history": 17,
+   "pre_collapse_flags_not_at_langtang": 461,
+   "mean_unverified_flags_per_100km2_eligible_per_pass": 10.515341151428881
+  },
+  {
+   "parameter": "min_blob_pixels",
+   "value": 80,
+   "pairs_with_history": 22,
+   "total_flags": 94,
+   "flags_at_langtang_total": 0,
+   "pairs_with_langtang_flag": [],
+   "median_flags_per_pair": 3.0,
+   "max_flags_per_pair": 11,
+   "pre_collapse_pairs_with_history": 17,
+   "pre_collapse_flags_not_at_langtang": 66,
+   "mean_unverified_flags_per_100km2_eligible_per_pass": 1.5752165250155485
+  },
+  {
+   "parameter": "min_history_measurable",
+   "value": 2,
+   "pairs_with_history": 22,
+   "total_flags": 184,
+   "flags_at_langtang_total": 0,
+   "pairs_with_langtang_flag": [],
+   "median_flags_per_pair": 2.0,
+   "max_flags_per_pair": 32,
+   "pre_collapse_pairs_with_history": 17,
+   "pre_collapse_flags_not_at_langtang": 118,
+   "mean_unverified_flags_per_100km2_eligible_per_pass": 3.2798897124139135
+  },
+  {
+   "parameter": "history_pairs",
+   "value": 3,
+   "pairs_with_history": 23,
+   "total_flags": 325,
+   "flags_at_langtang_total": 2,
+   "pairs_with_langtang_flag": [
+    "20260714_20260726"
+   ],
+   "median_flags_per_pair": 11.0,
+   "max_flags_per_pair": 40,
+   "pre_collapse_pairs_with_history": 18,
+   "pre_collapse_flags_not_at_langtang": 220,
+   "mean_unverified_flags_per_100km2_eligible_per_pass": 4.906610808955921
+  },
+  {
+   "parameter": "history_pairs",
+   "value": 6,
+   "pairs_with_history": 20,
+   "total_flags": 202,
+   "flags_at_langtang_total": 2,
+   "pairs_with_langtang_flag": [
+    "20260714_20260726"
+   ],
+   "median_flags_per_pair": 7.0,
+   "max_flags_per_pair": 29,
+   "pre_collapse_pairs_with_history": 15,
+   "pre_collapse_flags_not_at_langtang": 135,
+   "mean_unverified_flags_per_100km2_eligible_per_pass": 3.7396639281101764
+  },
+  {
+   "parameter": "background_box",
+   "value": 51,
+   "pairs_with_history": 22,
+   "total_flags": 203,
+   "flags_at_langtang_total": 1,
+   "pairs_with_langtang_flag": [
+    "20260714_20260726"
+   ],
+   "median_flags_per_pair": 6.0,
+   "max_flags_per_pair": 31,
+   "pre_collapse_pairs_with_history": 17,
+   "pre_collapse_flags_not_at_langtang": 139,
+   "mean_unverified_flags_per_100km2_eligible_per_pass": 3.21069423270757
+  },
+  {
+   "parameter": "background_box",
+   "value": 125,
+   "pairs_with_history": 22,
+   "total_flags": 340,
+   "flags_at_langtang_total": 2,
+   "pairs_with_langtang_flag": [
+    "20260714_20260726"
+   ],
+   "median_flags_per_pair": 10.5,
+   "max_flags_per_pair": 50,
+   "pre_collapse_pairs_with_history": 17,
+   "pre_collapse_flags_not_at_langtang": 240,
+   "mean_unverified_flags_per_100km2_eligible_per_pass": 5.893283881424216
+  }
+ ]
+}

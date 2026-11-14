@@ -1,0 +1,35 @@
+{
+ "threshold_db": 3.0,
+ "intervals": {
+  "quiet": [
+   "20260714",
+   "20260726"
+  ],
+  "event": [
+   "20260819",
+   "20260831"
+  ]
+ },
+ "channels": {
+  "HHHH": {
+   "polygon_pixels": 19563,
+   "valid_pixels": 17626,
+   "quiet_pct": 18.55213888573698,
+   "event_pct": 41.22319301032565,
+   "controls_n": 97,
+   "control_event_minus_quiet_max": 8.490976299195477,
+   "control_event_minus_quiet_median": -1.0456383593298693,
+   "event_minus_quiet": 22.67105412458867
+  },
+  "HVHV": {
+   "polygon_pixels": 19563,
+   "valid_pixels": 17626,
+   "quiet_pct": 18.597526381481902,
+   "event_pct": 36.56530125950301,
+   "controls_n": 97,
+   "control_event_minus_quiet_max": 7.458143074581432,
+   "control_event_minus_quiet_median": -0.8350963144415982,
+   "event_minus_quiet": 17.967774878021107
+  }
+ }
+}
