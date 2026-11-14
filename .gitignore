@@ -1,0 +1,9 @@
+.netrc
+_netrc
+*.netrc
+.playwright-mcp/
+__pycache__/
+*.npz
+*.h5
+sub/
+.env
