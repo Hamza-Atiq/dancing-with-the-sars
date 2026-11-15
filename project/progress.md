@@ -61,3 +61,5 @@ Newest entries at the bottom. A new session should read `HANDOFF.md`, then `proj
 - Started: walking the user through the website so they can defend it.
 - User asked why the pass 50 h before the collapse was not used: it was (Sentinel-1 12–24 Aug pair, unreadable in phase). Tried brightness instead with OPERA RTC-S1, 2026 and 2025 (`scripts/s1_rtc.py`). Found: track 85 patch fully in layover; 24 Aug brightness normal; 12.0 and 10.6 dB drop across the collapse with 0 controls matching; June–July brightening is seasonal. Recorded in `project/results.md` section 8. Not yet on the website.
 - Challenge resource list re-read: RCM (EODMS) and SAOCOM (CONAE) are the only listed sources still unsearched; both need the user's own accounts. RADARSAT-1 ended 2013.
+- Website walkthrough with the user: parts 1–4 explained (hero, event, how radar measures 5 cm, the four panels), each with likely judge questions. Next: part 5.
+- End of session 4. Open with the user: add the brightness points to the website (offered); team names; RCM/SAOCOM accounts.
