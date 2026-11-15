@@ -50,9 +50,9 @@ All 42 pairs were fetched (`P05023` from 20 Jun, `X05026` before, as for Langtan
 | 149 D | 4 (23 Aug – 10 Oct) | 4 | none | 50 in 4 pairs, median 14.5 |
 | 048 D | 3 (28 Aug – 3 Oct) | 2 | none | 33 in 4 pairs, median 7.5 |
 
-- **The only flag at the source is 8 months before the failure**, in winter. In every one of the last 20 ascending pairs (8 Feb – 6 Oct), including the last four after the monsoon, the zone was measurable and eligible (700–2,000 pixels) and **no flag was raised there**. The descending pair ending about 9 hours before the flood (28 Sep – 10 Oct, 837 eligible pixels) raised no flag at the source.
+- **The only flag at the source is 8 months before the failure**, in winter. In every one of the 19 later ascending pairs (8 Feb – 6 Oct), including the last four after the monsoon, the zone was measurable and eligible (640–2,100 pixels) and **no flag was raised there**. The descending pair ending about 9 hours before the flood (28 Sep – 10 Oct, 837 eligible pixels) raised no flag at the source.
 - **The pair spanning the event (6 – 18 Oct, track 098 A)** shows zone coherence 0.30, against a median of about 0.36 in the four pairs before; this is not a collapse by rule 5, and the failure is not obvious in the coherence at this scale.
-- **The weakness of the rule as written.** Rule 4 counted any pre-event pair, however early. A flag 8 months before a failure, followed by 20 quiet pairs, is not a warning of that failure. This was not foreseen when the rules were written; the outcome is reported as "HIT" because that is what the rule says, and explained here.
+- **The weakness of the rule as written.** Rule 4 counted any pre-event pair, however early. A flag 8 months before a failure, followed by 19 quiet pairs, is not a warning of that failure. This was not foreseen when the rules were written; the outcome is reported as "HIT" because that is what the rule says, and explained here.
 
 ### Added after seeing the result: how often does chance give the same?
 

@@ -44,13 +44,24 @@ The three charts are drawn from the result files by `scripts/readme_figures.py`.
 
 Our experimental detector generated **270 flags over 22 evaluated pairs**, including two flag regions on the Langtang slope in one July pair. **The other 268 flags are unverified.** They are not confirmed hazards or confirmed false alarms. The detector was adjusted using Langtang, so its success on this case is not independent validation.
 
+### Four further checks (15 Nov 2026)
+
+Each had its rules committed to this repository before its data was opened; results were added below the rules without changing them.
+
+| Check | Result | Record |
+|---|---|---|
+| Frozen rule on an unseen failure: Budhi Gandaki rock slope, Nepal, 11 Oct 2026 (same NISAR frame, three tracks) | **No flag at the source in the 8 months before the failure.** One winter flag 8 months early, which 42% of random spots of the same size also get. Not an independent detection. | [independent_test.md](project/independent_test.md) |
+| What are the other 268 flags? (HLS optical snow/cloud mask, eye check of 20) | Only 65 could be checked through cloud: 28 on snow, 32 snow-free (the shortlist for real movement). Of 20 random flags, 11 sit on snow or glacier, 6 on steep bare rock; none on a fresh scar. | [flag_check.md](project/flag_check.md) |
+| The small winter steps: air, height-model error or snow? | Air layers between the patch (5,075 m) and its reference (4,300 m) explain 3 of 9 winter steps, by two independent methods. Height-model error does not; snow could not be tested. **The same tests explain almost none of the July step** (about 0.1 cm of 5.6 cm). | [winter_check.md](project/winter_check.md) |
+| The blind 24 days at 5 m (GSLC phase and offset tracking) | The full-resolution images independently reproduce the July step (−2.78 vs −2.91 rad). 26 Jul – 19 Aug stays unreadable; offsets show no shift of the patch above their noise (upper bound about 0.5 m). | [gap_check.md](project/gap_check.md) |
+
 ## What is missing
 
 - **Independent precursor confirmation:** establish whether the July phase signal represents slope movement, using complementary observations and tests for snow, atmosphere and terrain effects.
-- **The final approach to failure:** our NISAR patch measurement is unresolved over 26 July–19 August. Tested Sentinel-1 interferograms do not supply a reliable displacement measurement there. This is a limitation of these analyses, not an absence of all observations.
+- **The final approach to failure:** our NISAR patch measurement is unresolved over 26 July–19 August, also at 5 m resolution (phase unreadable; offsets show no shift above their noise, upper bound about 0.5 m). Tested Sentinel-1 interferograms do not supply a reliable displacement measurement there. This is a limitation of these analyses, not an absence of all observations.
 - **The source-to-river sequence:** validated locations and dates for deposition, any blockage, temporary lake and drainage. The slope coordinate must not be presented as a dam coordinate.
 - **Hydrological evidence:** original gauge records and terrain constraints before claiming water-level rise, stored-water volume or flood arrival times.
-- **Independent evaluation:** test the frozen detector on other failures and non-failing slopes, with seasonal controls, to measure missed events and unnecessary reviews.
+- **Independent evaluation:** one unseen failure (Budhi Gandaki) has been tested and gave nothing above chance. More failures and non-failing slopes are needed before any rate of missed events or unnecessary reviews can be stated.
 - **Operational feasibility:** establish product availability dates, processing delays, coverage, and who could review and act on a flag. Acquisition time alone is not usable warning time.
 
 ## Limitations
@@ -69,7 +80,7 @@ We cannot currently predict collapse time, demonstrate that a warning could have
 
 1. Inspect event-adjacent optical imagery across the source and river corridor, preserving timestamps, masks and uncertain areas. Trace the published Planet 25/26 August comparison to original scene metadata.
 2. Combine checked surface-change maps, terrain products and gauge records into a dated reconstruction. Test the temporary-lake explanation instead of assuming it.
-3. Evaluate the frozen detector on held-out events and non-failing slopes. Classify a documented sample of other flags before reporting detection performance.
+3. Evaluate the frozen detector on more held-out events and non-failing slopes (one done: Budhi Gandaki, no detection). Look at the 32 snow-free flags in detail; most other flags could not be checked through cloud.
 4. Develop a review workflow as the evidence supports it: record unusual change, attach supporting scenes and quality information, identify potentially connected downstream infrastructure, and request expert assessment.
 
 The longer-term ambition is a monitoring aid for specialists: a watch list of changes deserving attention. A warning service would require prospective validation, reliable delivery, local instruments where appropriate, and an agreed response process with responsible agencies. Those capabilities are not implemented here.

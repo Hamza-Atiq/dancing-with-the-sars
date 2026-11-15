@@ -1,6 +1,29 @@
-# Handoff — state on 15 Nov 2026 (session 4)
+# Handoff — state on 15 Nov 2026 (session 5)
 
-Read this first when resuming, starting with the section "State at the end of session 3". Then `project/spec.md`, `project/plan.md`, `project/progress.md` (running log), `project/results.md` (all numbers).
+Read this first when resuming, starting with "Session 5 update", then "Session 4 update".
+
+## Session 5 update (15 Nov 2026, evening) — START HERE
+
+**Website (item 1 of the old pending list): done and pushed** (commit `be3abcb`). Checked in Chrome on desktop and at phone width: brightness chart in part 7 matches `data/rtc/rtc_patch.json`; shorter text throughout. Fixed two bugs: the 361-slope dot chart drew its tallest column over the headline (height now follows the tallest column); the two Sentinel-1 charts were cut off on phones (now scroll inside their box). README has three charts from `scripts/readme_figures.py` (SVGs in `previews/readme_*.svg`). `previews/story_*.png` are old screenshots, still untracked. The live Vercel site was not re-opened after the push.
+
+**Four research checks done** (the first four "suggested next steps"). Each one's rules were committed before its data was opened; results appended below the rules. Plain summary:
+
+1. **Independent test, Budhi Gandaki rock slope failure, 11 Oct 2026** (`project/independent_test.md`; data `data/indep_bg/`, 42 pairs, 3 tracks). Rule outcome "HIT" only because of one winter flag 8 months early (27 Jan–8 Feb); 42% of random same-size spots also get a flag (post-hoc check). No flag at the source in the 19 later ascending pairs or on the two descending tracks, including a pair ending ~9 h before the flood. **Not an independent detection.** Hanjia (17 Jul 2026, China) rejected: too few pairs before the event.
+2. **Flag check** (`project/flag_check.md`; data `data/flagcheck/`): 65 of 268 flags classable through cloud with HLS Fmask; 28 snow, 32 snow-free (shortlist), 5 mixed. Eye check of 20 random flags: 11 snow/glacier, 6 steep bare rock, 1 vegetation, 1 debris-flow valley floor, 1 unclear; none on a fresh scar.
+3. **Winter steps** (`project/winter_check.md`; data `data/winter/`, DEM `data/dem/`): patch 5,075 m vs west block 4,300 m. Air delay explains 3 of 9 winter steps by two independent methods (fit across controls; GUNW weather-model layers), which agree closely. Height-model error: no. Snow: not testable (no clear winter images of this face). **Post-hoc: the July step is not air delay** (predicted +0.12 / +0.01 cm against −5.6 cm).
+4. **Blind 24 days at 5 m** (`project/gap_check.md`; data `data/gap/`, GSLC crops): GSLC reproduces the July step (−2.78 vs −2.91 rad). 26 Jul–19 Aug still unreadable; offsets show no patch shift above noise (~0.4 m), upper bound ~0.5 m; a preprint quotes 0.96 m (tension recorded, not resolved).
+
+**Not done / next:**
+- Website not updated with these four results (only README). Candidate spots: part 8 (flags: "65 checked, 28 snow, 32 snow-free"), part 9/10 (independent test: no detection), part 5 or 10 (July step is not air delay). Ask the user before changing the site.
+- Walkthrough of the site for the user: still at part 5 of 10 ("Was it unusual", 361 slopes). 361 vs 289 is confirmed in code: `control_ranks` needs the pair alone, `controls()` needs both July pairs.
+- Codex cross-check of the four new records not done (user's standing preference).
+- Team names; RCM (user's own EODMS account); submission text; demo video; old team-brief artifact still describes Quetta.
+
+Local data added this session (ignored by git): `data/indep_bg/` (~42 × 2 files), `data/flagcheck/` (205 Fmask npz, chips), `data/gap/` (5 GSLC crops, ~30 MB each), `data/winter/`, `data/dem/cop_N28_E085.tif`.
+
+---
+
+Older notes follow (session 4 and before). Then `project/spec.md`, `project/plan.md`, `project/progress.md` (running log), `project/results.md` (all numbers).
 
 ## What exists
 
