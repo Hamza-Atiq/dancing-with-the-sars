@@ -1,12 +1,12 @@
-# Handoff — state on 15 Nov 2026
+# Handoff — state on 15 Nov 2026 (end of session 3)
 
-Read this first when resuming. Then `project/spec.md`, `project/plan.md`, `project/progress.md` (running log), `project/results.md` (all numbers).
+Read this first when resuming, starting with the section "State at the end of session 3". Then `project/spec.md`, `project/plan.md`, `project/progress.md` (running log), `project/results.md` (all numbers).
 
 ## What exists
 
 **SlopeWatch**: a reproducible analysis plus a static web app about the Langtang Lirung collapse (Nepal, 26 Aug 2026).
 
-- App: `docs/` (static; `cd docs && python -m http.server 8765`, open http://127.0.0.1:8765/). Data for the app is in `docs/data` and is committed. Could be served by GitHub Pages from `/docs` (not enabled; needs the repo owner).
+- Site: `docs/index.html` is the story page, `docs/explore.html` the map tool (static; `cd docs && python -m http.server 8765`, open http://127.0.0.1:8765/). Data for the app is in `docs/data` and is committed. Could be served by GitHub Pages from `/docs` (not enabled; needs the repo owner).
 - Pipeline: `pipeline/build.py` regenerates `docs/data` from `data/` (about 8 minutes). `pipeline/write_results.py` regenerates the numeric sections of `project/results.md`.
 - Tests: `python -m pytest tests -q` (19 tests; real-data tests skip if `data/` is absent).
 - Raw extracts: `data/` (not in git). `data/series/` holds 34 interferogram windows fetched by `scripts/series_fetch.py`.
@@ -25,13 +25,27 @@ Read this first when resuming. Then `project/spec.md`, `project/plan.md`, `proje
 
 Ground movement as the cause of the phase step; direction and true size; onset date; anything about lead time or availability of products at the time; meaning of the other flags; performance anywhere else. The rule was tuned on Langtang, so its Langtang flag is not an independent detection.
 
-## Data hunt, 15 Nov (session 3) — record: `Langtang data hunt - Claude.md`
+## State at the end of session 3 (15 Nov 2026) — START HERE
 
-- **Location confirmed.** Our patch centre is 44 m from Li (2026)'s mapped centroid and 147 m from the HiRISK position (both read from Sah's preprint).
-- **NISAR:** still only tracks 098 A and 048 D. New validated GCOV/GSLC dates to 11 Nov. No product fills the 27 Jul – 10 Aug gap. GSLC (full resolution) is unused and available.
-- **Sentinel-1 was not used before and covers the source on three tracks**, with passes on 31 Jul, 4, 7, 12, 16 Aug (inside NISAR's gap) and 24 Aug (50.6 h before failure). `scripts/s1_hyp3.py` is ready to order 24 burst interferograms from ASF HyP3.
-- **Waiting on the user:** approve the ASF application once at `https://urs.earthdata.nasa.gov/approve_app?client_id=BO_n7nTIlMljdvU6kRRB3g`, then run `python scripts/s1_hyp3.py submit`, later `status` and `download`. Then measure the patch in the Sentinel-1 wrapped phase with the session-2 method.
-- ALOS-2 ends Mar 2025 at this point; RCM and SAOCOM catalogues need their own logins and were not searched.
+**1. Sentinel-1 download is running by itself.** A detached process (`scripts/s1_finish.py`, log `data/s1_finish.log`) downloads the 24 HyP3 burst interferograms into `data/s1/` (about 230 MB each, roughly 5.5 GB) and then runs `scripts/s1_patch.py`, writing `data/s1/s1_patch.json` and `data/s1/s1_patch_table.txt`.
+- First thing next session: `ls data/s1/*.zip | wc -l` (want 24) and read `data/s1_finish.log`.
+- If it stopped (PC restarted, fewer than 24 zips): check no copy is running, delete any `*.part`, run `C:/Users/HP/anaconda3/python.exe scripts/s1_finish.py` again. Finished files are skipped. HyP3 keeps the products for about two weeks from 15 Nov.
+- `scripts/s1_patch.py` has **never been run on real data**. Its rules were fixed before any Sentinel-1 file was opened (same patch pixels, west-block reference, consistency 0.6, same controls as NISAR). Expect to debug reading (GeoTIFF via PIL; grid, EPSG, sign) but do not change the rules after seeing results; if a rule must change, record it.
+- Then: read the table, write the result into `project/results.md` (new section) and `Langtang data hunt - Claude.md`, rerun `scripts/site_assets.py` so the website's Sentinel-1 slot fills in, check the page, push. Report the result whatever it is; a null is a result.
+
+**2. Website is built, not yet live.** `docs/index.html` (story page) + `docs/story.css` + `docs/story.js`; images and `story.json` in `docs/story/`, built by `scripts/site_assets.py` (and `scripts/site_optical.py` for two HLS Sentinel-2 scenes). The old map tool is `docs/explore.html`. Preview: `cd docs && python -m http.server 8765`. Screenshots: `previews/story_*.png`.
+- Waiting on the user: (a) whether to enable GitHub Pages from `/docs` (not enabled; `gh` works on this machine); (b) team member names for a team section.
+- User's aim: presentation that wins attention; cinematic look. Our line: beautiful, but only claims we can prove. Wording rules below still apply.
+- Ideas not done: demo video, submission text, a short "how to read this" for judges.
+
+**3. Data hunt results** (record: `Langtang data hunt - Claude.md`).
+- Location confirmed: patch centre 44 m from Li (2026)'s centroid, 147 m from HiRISK (both quoted in Sah's preprint).
+- NISAR: only tracks 098 A and 048 D; new validated GCOV/GSLC to 11 Nov; nothing fills 27 Jul – 10 Aug. GSLC is unused.
+- Sentinel-1: three tracks (19 D, 121 D, 85 A); passes on 31 Jul, 4, 7, 12, 16, 19, 24 Aug between NISAR's 26 Jul pass and the collapse.
+- ALOS-2 ends Mar 2025 here. RCM and SAOCOM catalogues not searched (own logins).
+- The user approved the ASF application on Earthdata; HyP3 works (7,976 credits left).
+
+**4. Repository.** Quetta and other Pakistan exploration files were removed from the public repo on the user's request (kept locally, in `.gitignore`). They remain in git history; history was not rewritten.
 
 ## Suggested next steps (none started)
 

@@ -48,3 +48,5 @@ Newest entries at the bottom. A new session should read `HANDOFF.md`, then `proj
 - Story site built: `docs/index.html` + `story.css` + `story.js`, images and data in `docs/story/` from `scripts/site_assets.py` (and `scripts/site_optical.py` for the two HLS Sentinel-2 scenes, 6 Oct 2025 and 23 Oct 2026). The old tool is now `docs/explore.html`. The Sentinel-1 section shows a placeholder until `data/s1/s1_patch.json` exists; then rerun `scripts/site_assets.py`.
 - Site checked in a browser at 1440 px and 390 px: no console errors, no sideways scroll. Screenshots: `previews/story_*.png`.
 - Note: imagecodecs/tifffile cannot decode deflate TIFFs here (NumPy mismatch); read GeoTIFFs with PIL.
+- End of session 3: two duplicate downloaders were stopped and replaced by one detached process, `scripts/s1_finish.py` (log `data/s1_finish.log`), which downloads all 24 Sentinel-1 zips and then runs `scripts/s1_patch.py`. 3 of 24 were on disk at 11:45 local time. `HANDOFF.md` has the resume steps.
+- Open for the user: enable GitHub Pages; team names for the site.
