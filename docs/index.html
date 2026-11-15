@@ -3,117 +3,187 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SlopeWatch — Langtang Lirung in NISAR radar</title>
-<meta name="description" content="What NASA-ISRO NISAR radar recorded on the Langtang Lirung slope before the 26 August 2026 collapse, and what a simple new-movement rule flags elsewhere.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M1 14 6 4l3 5 2-3 4 8z%27 fill=%27%23b3261e%27/%3E%3C/svg%3E">
-<link rel="stylesheet" href="vendor/leaflet.min.css">
-<link rel="stylesheet" href="style.css">
+<title>SlopeWatch — the mountain moved first</title>
+<meta name="description" content="A month before Langtang Lirung collapsed on 26 August 2026, NASA-ISRO NISAR radar recorded a patch of its slope shifting about five centimetres. What the data shows, and what it does not.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M1 14 6 4l3 5 2-3 4 8z%27 fill=%27%23f0a63a%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="story.css">
 </head>
 <body>
-<header class="top">
-  <div class="wrap">
-    <p class="kicker">NASA Space Apps 2026 · Dancing with the SARs · research demonstrator</p>
-    <h1>SlopeWatch</h1>
-    <p class="lede">What NISAR radar recorded on the north face of Langtang Lirung before it collapsed on 26 August 2026, and what the same rule flags across the surrounding mountains.</p>
-    <div id="finding" class="finding" aria-live="polite">Loading results…</div>
-  </div>
+
+<header class="bar" id="bar">
+  <a class="bar-name" href="#top">SlopeWatch</a>
+  <p class="bar-clock" aria-live="off"><span id="clock-n">271</span> <span id="clock-t">days before the collapse</span></p>
+  <a class="bar-link" href="explore.html">Explore the data</a>
 </header>
 
-<main class="wrap">
-  <section aria-labelledby="map-h">
-    <h2 id="map-h">Map and timeline</h2>
-    <p class="hint">Each step is one pair of radar passes over the same ground. Colours show how the radar signal changed between the two passes.</p>
-    <div class="timeline">
-      <button id="prev" type="button" aria-label="Previous pair">◀</button>
-      <input id="slider" type="range" min="0" max="0" value="0" step="1" aria-label="Radar pair">
-      <button id="next" type="button" aria-label="Next pair">▶</button>
+<main id="top">
+
+<section class="hero" data-day="7" data-label="days before the collapse">
+  <div class="hero-img" id="hero-img">
+    <img src="story/radar_wide.webp" alt="Radar image of the mountains around Langtang Lirung, Nepal, taken by the NISAR satellite on 19 August 2026." width="2868" height="1919">
+    <span class="mark" id="hero-mark" aria-hidden="true"></span>
+  </div>
+  <div class="hero-text">
+    <h1>The mountain<br>moved first.</h1>
+    <p class="hero-lede">A month before the north face of Langtang Lirung fell, a radar satellite recorded a small patch of it shifting about five centimetres. This page shows what the data holds, and what it does not.</p>
+  </div>
+  <p class="credit">NISAR radar image, 19 August 2026, seven days before the collapse. The ring marks the patch.</p>
+</section>
+
+<section class="sheet" data-day="0" data-label="days. 26 August 2026, 08:37">
+  <div class="col">
+    <h2>26 August 2026, 08:37 in the morning</h2>
+    <p>A block of rock and ice about 600 metres wide broke off Langtang Lirung, a 7,227-metre peak in Nepal, at roughly 5,200 metres. It fell more than a kilometre into a border valley and became a flood that ran about 100 kilometres downstream.</p>
+    <p>There were no instruments on the slope. Monsoon cloud hid it from ordinary satellite cameras. Radar satellites see through cloud, and one had been passing over every twelve days.</p>
+  </div>
+  <figure class="compare-wrap">
+    <div class="tabs" role="tablist" aria-label="Image type">
+      <button role="tab" aria-selected="true" data-kind="optical">Camera</button>
+      <button role="tab" aria-selected="false" data-kind="radar">Radar</button>
     </div>
-    <div id="pairlabel" class="pairlabel"></div>
-    <div class="mapgrid">
-      <div id="map" role="application" aria-label="Map of the Langtang area"></div>
-      <aside class="panel">
-        <fieldset>
-          <legend>Radar layer</legend>
-          <label><input type="radio" name="layer" value="anom" checked> Phase anomaly</label>
-          <label><input type="radio" name="layer" value="phase"> Raw wrapped phase</label>
-          <label><input type="radio" name="layer" value="coh"> Coherence</label>
-          <label><input type="radio" name="layer" value="none"> None</label>
-          <label class="opacity">Opacity <input id="opacity" type="range" min="0" max="100" value="85"></label>
-        </fieldset>
-        <fieldset>
-          <legend>Overlays</legend>
-          <label><input type="checkbox" id="ov-flags" checked> Flags for this pair</label>
-          <label><input type="checkbox" id="ov-outlines" checked> Outlines</label>
-          <label><input type="checkbox" id="ov-event"> Collapse: brightness change 19→31 Aug</label>
-          <label><input type="checkbox" id="ov-quiet"> Comparison: brightness change 14→26 Jul</label>
-        </fieldset>
-        <fieldset>
-          <legend>Go to</legend>
-          <div class="btnrow">
-            <button type="button" id="go-slope">Langtang slope</button>
-            <button type="button" id="go-window">Whole window</button>
-            <button type="button" id="go-key">Pair 14–26 Jul</button>
-          </div>
-          <label><input type="radio" name="base" value="sat" checked> Satellite</label>
-          <label><input type="radio" name="base" value="topo"> Terrain map</label>
-        </fieldset>
-        <div id="legend" class="legend"></div>
-      </aside>
+    <div class="compare" id="compare">
+      <img id="cmp-b" src="story/optical_after.webp" alt="" width="1200" height="864">
+      <div class="compare-top" id="cmp-clip"><img id="cmp-a" src="story/optical_before.webp" alt="" width="1200" height="864"></div>
+      <span class="compare-line" id="cmp-line" aria-hidden="true"></span>
+      <span class="mark small" id="cmp-mark" aria-hidden="true"></span>
+      <span class="tag tag-l" id="cmp-la"></span><span class="tag tag-r" id="cmp-lb"></span>
+      <input type="range" min="0" max="100" value="50" id="cmp-range" aria-label="Slide between the earlier and later image">
     </div>
-  </section>
+    <figcaption id="cmp-cap"></figcaption>
+  </figure>
+</section>
 
-  <section aria-labelledby="chart-h">
-    <h2 id="chart-h">The slope, pass by pass</h2>
-    <p class="hint">Phase step of the measured patch against nearby rock, as a line-of-sight equivalent. Shown as a size only, because the direction is not verified. Select a point to show that pair on the map.</p>
-    <div id="chart" class="chart"></div>
-    <div id="chartnote" class="note"></div>
-    <h3>Is the step special?</h3>
-    <div id="controls" class="chart small"></div>
-    <div id="controlsnote" class="note"></div>
-  </section>
+<section class="sheet dark" data-day="43" data-label="days before the collapse">
+  <div class="col">
+    <h2>How a satellite 747 kilometres up notices five centimetres</h2>
+  </div>
+  <ol class="steps">
+    <li>
+      <svg viewBox="0 0 220 120" role="img" aria-label="A satellite sends a radar wave to the ground and records the echo."><path d="M20 22 L52 14" class="s-sat"/><path d="M36 22 C70 50 110 78 190 100" class="s-wave"/><path d="M10 104 L70 96 L110 70 L150 92 L210 100" class="s-ground"/><circle cx="110" cy="70" r="4" class="s-dot"/></svg>
+      <h3>First pass</h3>
+      <p>The satellite sends a radar wave and records exactly where in the wave the echo comes back from each spot of ground.</p>
+    </li>
+    <li>
+      <svg viewBox="0 0 220 120" role="img" aria-label="Twelve days later the satellite repeats the same measurement."><path d="M20 22 L52 14" class="s-sat"/><path d="M36 22 C70 50 110 78 190 100" class="s-wave"/><path d="M10 104 L70 96 L110 70 L150 92 L210 100" class="s-ground"/><circle cx="114" cy="73" r="4" class="s-dot hot"/><circle cx="110" cy="70" r="4" class="s-ghost"/></svg>
+      <h3>Twelve days later</h3>
+      <p>It flies the same path and measures again. If a spot has moved, its echo returns at a slightly different point in the wave.</p>
+    </li>
+    <li>
+      <svg viewBox="0 0 220 120" role="img" aria-label="A colour scale: blue for no change, amber for half a wave of change."><defs><linearGradient id="cyc" x1="0" x2="1"><stop offset="0" stop-color="#f0a63a"/><stop offset=".25" stop-color="#1b2740"/><stop offset=".5" stop-color="#4a7e96"/><stop offset=".75" stop-color="#e8eef0"/><stop offset="1" stop-color="#f0a63a"/></linearGradient></defs><rect x="14" y="44" width="192" height="22" fill="url(#cyc)"/><text x="110" y="88" text-anchor="middle" class="s-t">same as its neighbours</text><text x="14" y="34" class="s-t">6 cm</text><text x="206" y="34" text-anchor="end" class="s-t">6 cm</text></svg>
+      <h3>Compare</h3>
+      <p>We colour each spot by that difference, measured against solid rock next to it. Blue means no change. Amber means about half a wave, close to six centimetres.</p>
+    </li>
+  </ol>
+  <p class="aside col">The radar measures change along its own line of sight, so these are not true ground distances. We report them as “equivalent to” a distance for that reason.</p>
+</section>
 
-  <section aria-labelledby="watch-h">
-    <h2 id="watch-h">Watch list</h2>
-    <p class="hint">A flag is a compact area that was measurable and quiet in earlier passes and now shows a phase step. Flags are not warnings and have not been checked on the ground.</p>
-    <div class="two">
-      <div>
-        <h3 id="flags-title">Flags in the selected pair</h3>
-        <div id="flagtable"></div>
-      </div>
-      <div>
-        <h3>All pairs</h3>
-        <div id="yeartable"></div>
-        <div id="yearsummary" class="note"></div>
-      </div>
+<section class="sheet dark flush" data-day="31" data-label="days before the collapse">
+  <div class="col">
+    <h2>What the satellite saw</h2>
+    <p>Four pairs of passes over the same 2.4 kilometres of slope. The box is the patch. Dark areas are where the radar could not get a reliable reading.</p>
+  </div>
+  <div class="panels" id="panels"></div>
+  <div class="col">
+    <p class="big"><span id="k-cm">4.7 to 5.6</span> centimetres in twelve days, where the pair before showed <span id="k-prev">0.6</span>.</p>
+    <p>Five different choices of “stable rock” give the same answer. The patch is 0.056 square kilometres, about eight football pitches, and its centre lies 44 metres from the collapse source mapped independently by other researchers.</p>
+  </div>
+</section>
+
+<section class="sheet" data-day="31" data-label="days before the collapse">
+  <div class="col">
+    <h2>Was it unusual, or do slopes do this all the time?</h2>
+    <p>We ran the same measurement on every comparable slope in the surrounding 550 square kilometres. Each dot is one slope in the same twelve days.</p>
+    <p class="big">None of the 361 moved as much.</p>
+  </div>
+  <figure class="chart"><div id="ch-controls"></div>
+    <figcaption>Size of the step on 361 other slopes, 14 to 26 July 2026, and on the Langtang patch. None reaches it.</figcaption></figure>
+</section>
+
+<section class="sheet" data-day="271" data-label="days of radar passes">
+  <div class="col">
+    <h2>One year, twenty-six frames</h2>
+    <p>Every pair of passes from November 2025 to October 2026. For most of spring and early summer the patch is unreadable, possibly because of melting snow. In winter it is readable and shows small steps that we cannot yet explain.</p>
+  </div>
+  <div class="strip" id="strip" tabindex="0" aria-label="Film strip of the slope in every radar pair"></div>
+  <figure class="chart"><div id="ch-year"></div>
+    <figcaption>Step on the patch in each pair. Filled: a reading we trust. Hollow: unreadable, shown only so nothing is hidden. Shaded: the satellite was not recording.</figcaption></figure>
+</section>
+
+<section class="sheet dark" data-day="24" data-label="days before the collapse">
+  <div class="col">
+    <h2>The last twenty-four days are blind</h2>
+    <p>From 27 July to 10 August the satellite was not recording. The next pair spans 24 days and the patch in it is a jumble we will not put a number on. Other researchers, using other methods, report the slope moving faster and faster in exactly this period.</p>
+    <p>A second radar satellite, Sentinel-1, passed over seven times between NISAR’s 26 July pass and the collapse. The last was 50 hours before it.</p>
+  </div>
+  <figure class="chart"><div id="ch-passes"></div>
+    <figcaption>Every radar pass over the slope, June to August 2026. Shaded: NISAR was not recording. Amber: Sentinel-1 passes after 26 July, the last NISAR pass with a readable patch.</figcaption></figure>
+  <div class="slot col" id="s1-slot"></div>
+</section>
+
+<section class="sheet flush" data-day="31" data-label="days before the collapse">
+  <div class="col">
+    <h2>One flag at the right place, among 270</h2>
+    <p>We turned the finding into a simple rule: flag any patch of ground that was quiet and then shifts. Run over the whole year, the rule flags the Langtang slope exactly once, in the 14 to 26 July pair.</p>
+    <p>It also raises 268 other flags. We have not checked them. Some will be glaciers and snow; some may be real. Until they are checked, this is a watch list and not a warning system.</p>
+  </div>
+  <figure class="flagmap">
+    <div class="flagmap-img" id="flagmap"><img src="story/radar_wide.webp" alt="Radar image of the study area with every flag marked." width="2868" height="1919" loading="lazy"></div>
+    <figcaption><span class="lkey hot"></span> Langtang slope, 14 to 26 July <span class="lkey"></span> every other flag in the year</figcaption>
+  </figure>
+  <figure class="chart"><div id="ch-flags"></div>
+    <figcaption>Flags raised in each pair of passes. The amber bar is the pair with the Langtang flag.</figcaption></figure>
+</section>
+
+<section class="sheet dark" data-day="31" data-label="days before the collapse">
+  <div class="col">
+    <h2>Could this time an alarm?</h2>
+  </div>
+  <div class="timeline" id="tl">
+    <div class="tl-row">
+      <div class="tl-pt"><b>14 July</b><span>first pass</span></div>
+      <div class="tl-gap"><i>12 days</i></div>
+      <div class="tl-pt hot"><b>26 July</b><span>second pass. The step is now in the data</span></div>
+      <div class="tl-gap long"><i>31 days</i></div>
+      <div class="tl-pt"><b>26 August</b><span>collapse</span></div>
     </div>
-    <details>
-      <summary>How the count changes with the rule's settings</summary>
-      <div id="sensitivity"></div>
-    </details>
-  </section>
+  </div>
+  <div class="two">
+    <div>
+      <h3>What the data supports</h3>
+      <p>The measurement that shows the step existed 31 days before the collapse, in a standard product anyone can download for free.</p>
+    </div>
+    <div>
+      <h3>What it does not</h3>
+      <p>We do not know how soon after 26 July that product was published. Our rule was tuned on this slope, so finding it here is not a fair test. And nobody would have known which of the flags to act on.</p>
+    </div>
+  </div>
+</section>
 
-  <section aria-labelledby="collapse-h">
-    <h2 id="collapse-h">The collapse itself</h2>
-    <div id="collapse"></div>
-  </section>
+<section class="sheet" data-day="0" data-label="days. What comes next">
+  <div class="col">
+    <h2>What it would take to make this real</h2>
+  </div>
+  <ol class="next">
+    <li><h3>A fair test</h3><p>Run the frozen rule, unchanged, on a different slope failure it has never seen.</p></li>
+    <li><h3>Check the other flags</h3><p>Compare a sample of the 268 against camera images to learn how many are glaciers, snow or real movement.</p></li>
+    <li><h3>More than one satellite</h3><p>NISAR alone looks every twelve days. Together with Sentinel-1, a radar passed over this slope every three to five days in August.</p></li>
+    <li><h3>Speed</h3><p>Measure the delay between a pass and its published product. An alarm is only as early as its data.</p></li>
+  </ol>
+</section>
 
-  <section aria-labelledby="limits-h">
-    <h2 id="limits-h">What this does not show</h2>
-    <ul class="limits" id="limits"></ul>
-  </section>
-
-  <section aria-labelledby="method-h">
-    <h2 id="method-h">Method and sources</h2>
-    <div id="method"></div>
-  </section>
-</main>
-
-<footer class="wrap foot">
-  <p>Data: NASA-ISRO NISAR L2 GUNW and GCOV provisional products via the Alaska Satellite Facility; UNOSAT product 4260. Analysis code and records: <a href="https://github.com/Hamza-Atiq/dancing-with-the-sars">github.com/Hamza-Atiq/dancing-with-the-sars</a>.</p>
-  <p id="generated"></p>
+<footer class="foot">
+  <div class="col wide">
+    <h2>What we do not claim</h2>
+    <p>That the ground moved rather than something else changing the radar signal. The true direction or size of the movement. When it began. That anyone could have acted on it. That the rule works anywhere else. The early movement itself was first reported by other researchers; our part is showing it in NASA’s ready-made data and counting what a watch list would cost.</p>
+    <p class="links"><a href="explore.html">Explore the data on a map</a><a href="https://github.com/Hamza-Atiq/dancing-with-the-sars">Code, methods and every number</a></p>
+    <p class="fine">Built for the NASA Space Apps Challenge 2026, “Dancing with the SARs”. Radar: NISAR (NASA and ISRO), from the Alaska Satellite Facility. Camera images: contains modified Copernicus Sentinel data 2025 and 2026, from NASA’s Harmonized Landsat Sentinel-2 archive. Collapse outline and source positions: UNOSAT; Li (2026) and HiRISK as quoted by Sah (2026). NASA does not endorse this project.</p>
+  </div>
 </footer>
 
-<script src="vendor/leaflet.min.js"></script>
-<script src="app.js"></script>
+</main>
+<script src="story.js"></script>
 </body>
 </html>

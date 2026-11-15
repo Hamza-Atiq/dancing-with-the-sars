@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SlopeWatch — Langtang Lirung in NISAR radar</title>
+<meta name="description" content="What NASA-ISRO NISAR radar recorded on the Langtang Lirung slope before the 26 August 2026 collapse, and what a simple new-movement rule flags elsewhere.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M1 14 6 4l3 5 2-3 4 8z%27 fill=%27%23b3261e%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="vendor/leaflet.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <p class="kicker"><a href="index.html">← Back to the story</a> · NASA Space Apps 2026 · Dancing with the SARs · research demonstrator</p>
+    <h1>SlopeWatch</h1>
+    <p class="lede">What NISAR radar recorded on the north face of Langtang Lirung before it collapsed on 26 August 2026, and what the same rule flags across the surrounding mountains.</p>
+    <div id="finding" class="finding" aria-live="polite">Loading results…</div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section aria-labelledby="map-h">
+    <h2 id="map-h">Map and timeline</h2>
+    <p class="hint">Each step is one pair of radar passes over the same ground. Colours show how the radar signal changed between the two passes.</p>
+    <div class="timeline">
+      <button id="prev" type="button" aria-label="Previous pair">◀</button>
+      <input id="slider" type="range" min="0" max="0" value="0" step="1" aria-label="Radar pair">
+      <button id="next" type="button" aria-label="Next pair">▶</button>
+    </div>
+    <div id="pairlabel" class="pairlabel"></div>
+    <div class="mapgrid">
+      <div id="map" role="application" aria-label="Map of the Langtang area"></div>
+      <aside class="panel">
+        <fieldset>
+          <legend>Radar layer</legend>
+          <label><input type="radio" name="layer" value="anom" checked> Phase anomaly</label>
+          <label><input type="radio" name="layer" value="phase"> Raw wrapped phase</label>
+          <label><input type="radio" name="layer" value="coh"> Coherence</label>
+          <label><input type="radio" name="layer" value="none"> None</label>
+          <label class="opacity">Opacity <input id="opacity" type="range" min="0" max="100" value="85"></label>
+        </fieldset>
+        <fieldset>
+          <legend>Overlays</legend>
+          <label><input type="checkbox" id="ov-flags" checked> Flags for this pair</label>
+          <label><input type="checkbox" id="ov-outlines" checked> Outlines</label>
+          <label><input type="checkbox" id="ov-event"> Collapse: brightness change 19→31 Aug</label>
+          <label><input type="checkbox" id="ov-quiet"> Comparison: brightness change 14→26 Jul</label>
+        </fieldset>
+        <fieldset>
+          <legend>Go to</legend>
+          <div class="btnrow">
+            <button type="button" id="go-slope">Langtang slope</button>
+            <button type="button" id="go-window">Whole window</button>
+            <button type="button" id="go-key">Pair 14–26 Jul</button>
+          </div>
+          <label><input type="radio" name="base" value="sat" checked> Satellite</label>
+          <label><input type="radio" name="base" value="topo"> Terrain map</label>
+        </fieldset>
+        <div id="legend" class="legend"></div>
+      </aside>
+    </div>
+  </section>
+
+  <section aria-labelledby="chart-h">
+    <h2 id="chart-h">The slope, pass by pass</h2>
+    <p class="hint">Phase step of the measured patch against nearby rock, as a line-of-sight equivalent. Shown as a size only, because the direction is not verified. Select a point to show that pair on the map.</p>
+    <div id="chart" class="chart"></div>
+    <div id="chartnote" class="note"></div>
+    <h3>Is the step special?</h3>
+    <div id="controls" class="chart small"></div>
+    <div id="controlsnote" class="note"></div>
+  </section>
+
+  <section aria-labelledby="watch-h">
+    <h2 id="watch-h">Watch list</h2>
+    <p class="hint">A flag is a compact area that was measurable and quiet in earlier passes and now shows a phase step. Flags are not warnings and have not been checked on the ground.</p>
+    <div class="two">
+      <div>
+        <h3 id="flags-title">Flags in the selected pair</h3>
+        <div id="flagtable"></div>
+      </div>
+      <div>
+        <h3>All pairs</h3>
+        <div id="yeartable"></div>
+        <div id="yearsummary" class="note"></div>
+      </div>
+    </div>
+    <details>
+      <summary>How the count changes with the rule's settings</summary>
+      <div id="sensitivity"></div>
+    </details>
+  </section>
+
+  <section aria-labelledby="collapse-h">
+    <h2 id="collapse-h">The collapse itself</h2>
+    <div id="collapse"></div>
+  </section>
+
+  <section aria-labelledby="limits-h">
+    <h2 id="limits-h">What this does not show</h2>
+    <ul class="limits" id="limits"></ul>
+  </section>
+
+  <section aria-labelledby="method-h">
+    <h2 id="method-h">Method and sources</h2>
+    <div id="method"></div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>Data: NASA-ISRO NISAR L2 GUNW and GCOV provisional products via the Alaska Satellite Facility; UNOSAT product 4260. Analysis code and records: <a href="https://github.com/Hamza-Atiq/dancing-with-the-sars">github.com/Hamza-Atiq/dancing-with-the-sars</a>.</p>
+  <p id="generated"></p>
+</footer>
+
+<script src="vendor/leaflet.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

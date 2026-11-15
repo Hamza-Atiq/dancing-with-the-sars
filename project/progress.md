@@ -43,3 +43,8 @@ Newest entries at the bottom. A new session should read `HANDOFF.md`, then `proj
 - `scripts/archive_survey.py` (catalogue survey) and `scripts/s1_hyp3.py` (order and fetch Sentinel-1 burst interferograms) added.
 - Blocked: ASF returns "pre-authorization required" for Sentinel-1 downloads and HyP3. The user must approve the ASF application on their Earthdata account. Nothing was submitted.
 - Next after approval: `scripts/s1_hyp3.py submit` → `status` → `download`, then measure the patch in Sentinel-1 wrapped phase against controls.
+- Removed Quetta and other Pakistan exploration files from the public repository (kept locally, ignored).
+- ASF application approved by the user; 24 Sentinel-1 burst interferograms (INSAR_ISCE_BURST, 20 m) ordered through HyP3 and all succeeded. Zips are about 165 MB each; download into `data/s1/` with `scripts/s1_hyp3.py download` (resumable). Measurement script `scripts/s1_patch.py` is written with rules fixed before any Sentinel-1 data was opened; not yet run.
+- Story site built: `docs/index.html` + `story.css` + `story.js`, images and data in `docs/story/` from `scripts/site_assets.py` (and `scripts/site_optical.py` for the two HLS Sentinel-2 scenes, 6 Oct 2025 and 23 Oct 2026). The old tool is now `docs/explore.html`. The Sentinel-1 section shows a placeholder until `data/s1/s1_patch.json` exists; then rerun `scripts/site_assets.py`.
+- Site checked in a browser at 1440 px and 390 px: no console errors, no sideways scroll. Screenshots: `previews/story_*.png`.
+- Note: imagecodecs/tifffile cannot decode deflate TIFFs here (NumPy mismatch); read GeoTIFFs with PIL.
