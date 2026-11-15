@@ -4,7 +4,7 @@ Newest entries at the bottom. A new session should read `HANDOFF.md`, then `proj
 
 ## 14–15 Nov 2026 (Claude session 2)
 
-- Verified Codex's continuation; found the precursor in the 20 m wrapped phase. Record: `Langtang verification - Claude.md`. Pushed (commit af6649e).
+- Verified Codex's continuation; found the precursor in the 20 m wrapped phase. Record: `notes/Langtang verification - Claude.md`. Pushed (commit af6649e).
 - User instructions for this phase: write spec → plan → have Codex review both → build without stopping; keep records current so another session can continue.
 - Started `scripts/series_fetch.py` in the background: 34 GUNW pairs (26 ascending track 098, 8 descending track 048) → `data/series/`. Log in `data/series_fetch.log`. If the session dies, rerun `cd scripts; C:/Users/HP/anaconda3/python.exe -u series_fetch.py`; it skips finished files.
 - Detector prototype on the six old pairs (scratch only): single-pair anomaly rule gives 23–130 blobs per pair, mostly glaciers; in 14–26 Jul the Langtang patch is the 2nd largest blob (292 px) and has the highest mean anomaly (2.81 rad). Conclusion: rule needs a "quiet history" condition. This set the thresholds in the spec before the year-long run.
@@ -36,7 +36,7 @@ Newest entries at the bottom. A new session should read `HANDOFF.md`, then `proj
 
 ## 15 Nov 2026 (Claude session 3) — data hunt
 
-- User asked to re-check the exact location and look for data the earlier sessions missed. Record: `Langtang data hunt - Claude.md`.
+- User asked to re-check the exact location and look for data the earlier sessions missed. Record: `notes/Langtang data hunt - Claude.md`.
 - Location: patch centre is 44 m from Li (2026)'s centroid and 147 m from the HiRISK point. The old catalogue point (85.52 E, 28.25 N) was 4.3 km south, but NISAR queries at the right point return the same tracks and counts.
 - NISAR: nothing missed. New validated GCOV/GSLC to 11 Nov. GSLC is available for the 26 Jul – 19 Aug interval.
 - Sentinel-1: three tracks (19 D, 121 D, 85 A), five passes inside NISAR's gap and one 50.6 h before failure. Not used before.
@@ -50,3 +50,12 @@ Newest entries at the bottom. A new session should read `HANDOFF.md`, then `proj
 - Note: imagecodecs/tifffile cannot decode deflate TIFFs here (NumPy mismatch); read GeoTIFFs with PIL.
 - End of session 3: two duplicate downloaders were stopped and replaced by one detached process, `scripts/s1_finish.py` (log `data/s1_finish.log`), which downloads all 24 Sentinel-1 zips and then runs `scripts/s1_patch.py`. 3 of 24 were on disk at 11:45 local time. `HANDOFF.md` has the resume steps.
 - Open for the user: enable GitHub Pages; team names for the site.
+
+## Session 4 (15 Nov 2026)
+
+- Sentinel-1 download finished by itself (24 of 24) and `scripts/s1_patch.py` ran once, unedited. Reading checked with `scripts/s1_readcheck.py` (projection, grid, height on patch, alignment with NISAR, units): no fault found.
+- Result: no pair ending after 14 Jul is readable on the patch on any track; two early readable pairs are 0.1–0.2 cm and ordinary among controls. Recorded in `project/results.md` section 7 and `notes/Langtang data hunt - Claude.md`.
+- Website: Sentinel-1 slot filled (`scripts/site_assets.py` rerun; wording added in `docs/story.js`; one sentence added in "More than one satellite"). The new slot was not viewed in a browser by Claude.
+- The user put the site live on Vercel: https://dancing-with-the-sars-docs.vercel.app/ (root directory `docs`).
+- Note files moved from the root into `notes/` on the user's request; references updated.
+- Started: walking the user through the website so they can defend it.

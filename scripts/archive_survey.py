@@ -12,7 +12,7 @@ import sys
 import collections
 import requests
 
-# Published source coordinates (lon, lat). See "Langtang data hunt - Claude.md".
+# Published source coordinates (lon, lat). See "notes/Langtang data hunt - Claude.md".
 POINTS = {
     "Li2026_centroid": (85.52701, 28.28858),
     "HiRISK": (85.528159, 28.288708),

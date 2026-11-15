@@ -13,7 +13,7 @@ The product is a research demonstrator. It is not a warning service and makes no
 
 ## 2. What the research supports (basis for the design)
 
-Established by `Langtang verification - Claude.md`:
+Established by `notes/Langtang verification - Claude.md`:
 
 - The 20 m wrapped interferogram in GUNW products shows a compact patch (about 0.06 km², near 355500 E, 3130000 N, UTM 45N) with no comparable phase offset against the reference in 2–14 Jul (four of five references), a wrapped-phase step equivalent to about 5 cm line-of-sight in 14–26 Jul (4.7–5.6 cm across five references; the value is near half a cycle, so sign and exact amount are ambiguous by one cycle), and spatially mixed wrapped phase in 26 Jul–19 Aug whose magnitude is unresolved. Codex reproduced these numbers with separate code.
 - The 80 m unwrapped layer discards this patch (connected component 0). It must not be used for detection.

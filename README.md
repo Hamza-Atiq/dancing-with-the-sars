@@ -5,7 +5,7 @@ Research notes and scripts for our entry in the NASA Space Apps 2026 challenge "
 ## Where we are (15 Nov 2026)
 
 - **Project: SlopeWatch.** A reproducible analysis and a static web app about the Langtang Lirung ice-rock collapse (Nepal, 26 Aug 2026): what NISAR recorded on the slope beforehand, and what a simple "new movement" rule flags across the surrounding 30 km window.
-- **Main result:** the 20 m wrapped interferogram in the standard GUNW product shows a phase step equivalent to about 5 cm along the line of sight on a small patch of the slope between 14 and 26 July, with none in the pass before and none on 289 comparable slopes nearby. An earlier conclusion that the precursor could not be reproduced was wrong (a quality filter had removed the patch); see `Langtang verification - Claude.md`. Limits are stated in the app and in `project/results.md`.
+- **Main result:** the 20 m wrapped interferogram in the standard GUNW product shows a phase step equivalent to about 5 cm along the line of sight on a small patch of the slope between 14 and 26 July, with none in the pass before and none on 289 comparable slopes nearby. An earlier conclusion that the precursor could not be reproduced was wrong (a quality filter had removed the patch); see `notes/Langtang verification - Claude.md`. Limits are stated in the app and in `project/results.md`.
 - **Fallbacks:** glacier speed atlas; Manchar Lake.
 
 **Start with `HANDOFF.md`**, then `project/spec.md`, `project/plan.md`, `project/progress.md`, `project/results.md`.
@@ -41,14 +41,14 @@ The backscatter part also needs the six GCOV windows from `scripts/lang_gcov.py`
 | File | What it is |
 |---|---|
 | `HANDOFF.md` | Current decision, running jobs, next steps, tooling notes |
-| `Langtang verification - Claude.md` | Independent check of the Codex continuation; where the precursor was found |
-| `Langtang local verification - Codex.md` | Independent boundary, local results, version and mask audit, reproducible checks and remaining limits |
-| `Langtang continuation - Codex.md` | Initial extraction inventory and whole-window baseline |
-| `Langtang collapse - Claude.md` | Event facts, reported precursors, NISAR coverage at the site, tests under way |
-| `Glacier research - Claude.md` | Coverage at 16 glaciers worldwide, first ice-motion numbers, 2026 glacier events, Codex's verification |
-| `Independent verification - Claude.md` | Check of the 14 challenge resources and NISAR coverage over Pakistan |
-| `Dancing with the SARs - resource review.md` | Codex's original resource review |
-| `NISAR beginner notes.md` | Short primer on the NISAR products |
+| `notes/Langtang verification - Claude.md` | Independent check of the Codex continuation; where the precursor was found |
+| `notes/Langtang local verification - Codex.md` | Independent boundary, local results, version and mask audit, reproducible checks and remaining limits |
+| `notes/Langtang continuation - Codex.md` | Initial extraction inventory and whole-window baseline |
+| `notes/Langtang collapse - Claude.md` | Event facts, reported precursors, NISAR coverage at the site, tests under way |
+| `notes/Glacier research - Claude.md` | Coverage at 16 glaciers worldwide, first ice-motion numbers, 2026 glacier events, Codex's verification |
+| `notes/Independent verification - Claude.md` | Check of the 14 challenge resources and NISAR coverage over Pakistan |
+| `notes/Dancing with the SARs - resource review.md` | Codex's original resource review |
+| `notes/NISAR beginner notes.md` | Short primer on the NISAR products |
 | `previews/` | Images cut from public browse files and first processing outputs |
 | `scripts/` | The Python behind the numbers and images |
 

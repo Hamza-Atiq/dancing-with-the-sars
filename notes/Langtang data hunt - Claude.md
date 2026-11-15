@@ -67,6 +67,10 @@ Expectations, not results: Sah reports track 19 sees 44% of a 500 m disc at 71°
 
 **Blocked:** burst downloads and on-demand interferograms (ASF HyP3) return "pre-authorization required" for the user's Earthdata account. The user must approve the ASF application once at `https://urs.earthdata.nasa.gov/approve_app?client_id=BO_n7nTIlMljdvU6kRRB3g`. After that: `python scripts/s1_hyp3.py submit` (24 pairs, 1 Jun – 9 Sep, 20 m pixels), then `status`, `download`.
 
+**Unblocked and measured (15 Nov, later the same day).** The user approved the ASF application. 24 interferograms were ordered, downloaded (`scripts/s1_finish.py`, 5.5 GB in `data/s1/`) and measured once with rules fixed beforehand (`scripts/s1_patch.py`).
+
+Result: Sentinel-1 gives no new data point. No pair ending after 14 Jul is readable on the patch on any track. Two early pairs are readable (25 Jun–7 Jul on track 19, 2–14 Jul on track 121); both show a phase step equivalent to 0.1–0.2 cm along the line of sight, which about half the controls match or exceed. Track 85 cannot be read at all with the fixed reference. On track 19 the patch stays coherent through July (0.79–0.94) but its phase is too mixed to read. Sentinel-1 therefore neither confirms nor contradicts the NISAR step of 14–26 Jul, and it does not fill NISAR's gap. Full table, reading check and limits: `project/results.md` section 7.
+
 ### Other archives at the point
 
 | Dataset | Result |
@@ -92,12 +96,12 @@ Expectations, not results: Sah reports track 19 sees 44% of a 500 m disc at 71°
 
 1. The location is settled and independently confirmed.
 2. NISAR had nothing more to give by track or date before the collapse. Its unused products (GSLC) are the route to the last 24 days.
-3. Sentinel-1 is a second satellite with five passes inside NISAR's gap and one 50 h before failure. It is the best chance of new data points and is waiting on one approval click.
+3. Sentinel-1 is a second satellite with five passes inside NISAR's gap and one 50 h before failure. It is the best chance of new data points and is waiting on one approval click. **Update:** measured; it gave no readable pair after 14 Jul (section 3, Sentinel-1).
 4. Our wording should cite the other studies: the precursor is known; the published Sentinel-1 "no precursor" test averaged over a disc that mostly misses the patch.
 
 ## 5. Not checked
 
-Li (2026), HiRISK and the Research Square preprint at first hand; the MDPI paper's full text; the ICIMOD report PDF; Sentinel-1 data itself; cloud cover in HLS; RCM and SAOCOM catalogues; Copernicus EMSR927 products.
+Li (2026), HiRISK and the Research Square preprint at first hand; the MDPI paper's full text; the ICIMOD report PDF; cloud cover in HLS; RCM and SAOCOM catalogues; Copernicus EMSR927 products.
 
 ## Sources
 

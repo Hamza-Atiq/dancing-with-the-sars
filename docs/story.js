@@ -215,6 +215,9 @@
     }).join('');
     host.appendChild(html('div', 'slot-in', '<h3>Sentinel-1: ' + (res.length ? res.length + ' of ' + t19.length + ' pairs readable on the patch' : 'the patch is unreadable in all ' + t19.length + ' pairs') + '</h3>' +
       '<p>Same patch, same rules as for NISAR, fixed before we opened the data. Sentinel-1 uses a wave four times shorter, so it loses its reading sooner on rough, fast-changing ground.</p>' +
+      (res.length ? '<p>' + (res.every(function (r) { return r.controls_at_or_above / r.controls_resolved >= 0.25; }) ?
+        'The readable pairs are early and small: ' + res.map(function (r) { return r.controls_at_or_above + ' of ' + r.controls_resolved; }).join(' and ') + ' comparison patches elsewhere show as much or more. ' : '') +
+        'Sentinel-1 gives no reading on the patch in the pairs that cover late July and August, so it neither confirms nor contradicts what NISAR saw, and it does not fill the gap.</p>' : '') +
       '<table><thead><tr><th>Track</th><th>Pair, 2026</th><th>Signal quality on patch</th><th>Step</th></tr></thead><tbody>' + rowsHtml + '</tbody></table>'));
   }
 })();

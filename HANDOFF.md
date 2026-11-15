@@ -1,4 +1,4 @@
-# Handoff — state on 15 Nov 2026 (end of session 3)
+# Handoff — state on 15 Nov 2026 (session 4)
 
 Read this first when resuming, starting with the section "State at the end of session 3". Then `project/spec.md`, `project/plan.md`, `project/progress.md` (running log), `project/results.md` (all numbers).
 
@@ -25,20 +25,28 @@ Read this first when resuming, starting with the section "State at the end of se
 
 Ground movement as the cause of the phase step; direction and true size; onset date; anything about lead time or availability of products at the time; meaning of the other flags; performance anywhere else. The rule was tuned on Langtang, so its Langtang flag is not an independent detection.
 
+## Session 4 update (15 Nov 2026) — START HERE, then read session 3 below for background
+
+- **Sentinel-1 is done.** All 24 products downloaded; `scripts/s1_patch.py` ran once, unedited. Result: no pair ending after 14 Jul is readable on the patch on any track; the two readable pairs (25 Jun–7 Jul track 19, 2–14 Jul track 121) are 0.1–0.2 cm and ordinary among controls. Sentinel-1 neither confirms nor contradicts the NISAR step and does not fill the gap. Record: `project/results.md` section 7; reading check `scripts/s1_readcheck.py`. Item 1 of session 3 below is finished.
+- **Website is live on Vercel:** https://dancing-with-the-sars-docs.vercel.app/ (the user deployed it; root directory `docs`, redeploys on every push to `main`). GitHub Pages is not needed. The Sentinel-1 slot is filled from `story.json`; its new wording in `docs/story.js` was not looked at in a browser by Claude.
+- **Root tidy:** all note files moved to `notes/` on the user's request; only `README.md` and `HANDOFF.md` stay in the root. Quetta notes are in `notes/` too and still ignored by git.
+- **In progress:** the user is learning the website section by section so they can defend it to judges.
+- **Still open:** team member names; layover/shadow check for the patch in Sentinel-1 views; next steps list below (independent test of the frozen rule is the most valuable).
+
 ## State at the end of session 3 (15 Nov 2026) — START HERE
 
 **1. Sentinel-1 download is running by itself.** A detached process (`scripts/s1_finish.py`, log `data/s1_finish.log`) downloads the 24 HyP3 burst interferograms into `data/s1/` (about 230 MB each, roughly 5.5 GB) and then runs `scripts/s1_patch.py`, writing `data/s1/s1_patch.json` and `data/s1/s1_patch_table.txt`.
 - First thing next session: `ls data/s1/*.zip | wc -l` (want 24) and read `data/s1_finish.log`.
 - If it stopped (PC restarted, fewer than 24 zips): check no copy is running, delete any `*.part`, run `C:/Users/HP/anaconda3/python.exe scripts/s1_finish.py` again. Finished files are skipped. HyP3 keeps the products for about two weeks from 15 Nov.
 - `scripts/s1_patch.py` has **never been run on real data**. Its rules were fixed before any Sentinel-1 file was opened (same patch pixels, west-block reference, consistency 0.6, same controls as NISAR). Expect to debug reading (GeoTIFF via PIL; grid, EPSG, sign) but do not change the rules after seeing results; if a rule must change, record it.
-- Then: read the table, write the result into `project/results.md` (new section) and `Langtang data hunt - Claude.md`, rerun `scripts/site_assets.py` so the website's Sentinel-1 slot fills in, check the page, push. Report the result whatever it is; a null is a result.
+- Then: read the table, write the result into `project/results.md` (new section) and `notes/Langtang data hunt - Claude.md`, rerun `scripts/site_assets.py` so the website's Sentinel-1 slot fills in, check the page, push. Report the result whatever it is; a null is a result.
 
 **2. Website is built, not yet live.** `docs/index.html` (story page) + `docs/story.css` + `docs/story.js`; images and `story.json` in `docs/story/`, built by `scripts/site_assets.py` (and `scripts/site_optical.py` for two HLS Sentinel-2 scenes). The old map tool is `docs/explore.html`. Preview: `cd docs && python -m http.server 8765`. Screenshots: `previews/story_*.png`.
 - Waiting on the user: (a) whether to enable GitHub Pages from `/docs` (not enabled; `gh` works on this machine); (b) team member names for a team section.
 - User's aim: presentation that wins attention; cinematic look. Our line: beautiful, but only claims we can prove. Wording rules below still apply.
 - Ideas not done: demo video, submission text, a short "how to read this" for judges.
 
-**3. Data hunt results** (record: `Langtang data hunt - Claude.md`).
+**3. Data hunt results** (record: `notes/Langtang data hunt - Claude.md`).
 - Location confirmed: patch centre 44 m from Li (2026)'s centroid, 147 m from HiRISK (both quoted in Sah's preprint).
 - NISAR: only tracks 098 A and 048 D; new validated GCOV/GSLC to 11 Nov; nothing fills 27 Jul – 10 Aug. GSLC is unused.
 - Sentinel-1: three tracks (19 D, 121 D, 85 A); passes on 31 Jul, 4, 7, 12, 16, 19, 24 Aug between NISAR's 26 Jul pass and the collapse.
@@ -57,7 +65,7 @@ Ground movement as the cause of the phase step; direction and true size; onset d
 
 ## Decisions on record
 
-- Working project: Langtang. Quetta subsidence paused (nine-pair stack dominated by atmosphere; details in `Quetta deep dive and alternatives - Claude.md`, kept locally and not in the public repository since 15 Nov). Fallbacks: glacier speed atlas; Manchar Lake.
+- Working project: Langtang. Quetta subsidence paused (nine-pair stack dominated by atmosphere; details in `notes/Quetta deep dive and alternatives - Claude.md`, kept locally and not in the public repository since 15 Nov). Fallbacks: glacier speed atlas; Manchar Lake.
 - Wording rules for anything public: "phase step equivalent to X cm along the line of sight", "flag" not "warning", no casualty figures, no claims about what could have been done.
 - Detector parameters are frozen (`pipeline/params.json`). Any change must be recorded in `project/results.md` section 6 with before/after numbers.
 
@@ -66,4 +74,4 @@ Ground movement as the cause of the phase step; direction and true size; onset d
 - Earthdata Login is in `C:\Users\HP\.netrc` (never print or commit it). `scripts/nisar_io.py` reads NISAR HDF5 remotely.
 - In this environment bash heredocs fail on some content; write scripts to files instead.
 - Codex plugin: model `gpt-6-sol` works; ask for read-only reviews and keep it out of `data/` while jobs run.
-- Earlier records kept for provenance: `Langtang verification - Claude.md`, `Langtang local verification - Codex.md`, `Langtang continuation - Codex.md`, `Langtang collapse - Claude.md`.
+- Earlier records kept for provenance: `notes/Langtang verification - Claude.md`, `notes/Langtang local verification - Codex.md`, `notes/Langtang continuation - Codex.md`, `notes/Langtang collapse - Claude.md`.

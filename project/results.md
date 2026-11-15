@@ -177,5 +177,58 @@ The Langtang flag survives every variant except a larger minimum flag size (80 p
 2. Unwrap reporting rule tightened to require a readable pair (section 2). Conservative.
 3. Anomaly image opacity and resolution, for display only. No effect on numbers.
 4. Per-pair control ranking added after the winter values appeared (section 2), to put them in context. No detector setting was changed after the year-long run.
+5. Sentinel-1 (section 7): no rule was changed after the first run on real data. The script ran once, unedited.
 
 Provenance of item 1 and of "no change after the year-long run": this is the project's own record. The shipped JSON files hold only the final settings, and git does not prove the order either: the commit intended to capture the freeze did not include `pipeline/params.json`, so the frozen file first appears in commit `4eb4ad5` together with the year-long results. What can be checked: section 1 lists the calibration trials with their outputs, the sensitivity table in section 5 shows what the original setting (two quiet earlier pairs) gives on the full year (184 flags, none on Langtang), and Codex's independent recomputation used the frozen file.
+
+## 7. Sentinel-1 patch measurement (`scripts/s1_patch.py`) — 15 Nov 2026
+
+24 HyP3 burst interferograms (INSAR_ISCE_BURST, 20 m, VV), 1 Jun – 9 Sep 2026, eight consecutive pairs on each of three tracks. Rules were fixed before any Sentinel-1 file was opened and copy the NISAR method: the same 141 patch pixels (chosen from the NISAR 14–26 Jul pair), the same west-block reference, readable = patch consistency ≥ 0.6 and reference consistency ≥ 0.6, the same control boxes. The script ran once on the real data and was not edited afterwards. Output: `data/s1/s1_patch.json`, `data/s1/s1_patch_table.txt` (local, not in the repository).
+
+**Result: no pair ending after 14 Jul is readable on the patch, on any track. 2 of 24 pairs are readable, both early, and both are small and ordinary among the controls.**
+
+| Track | Pair | Coherence patch | Coherence west block | Consistency patch | Consistency reference | Phase (rad) | Line of sight (cm) | Readable | Controls readable | Control 95th pct (rad) |
+|---|---|---:|---:|---:|---:|---:|---:|---|---:|---:|
+| 019 D | 6–18 Jun | 0.36 | 0.98 | 0.37 | 0.94 | −0.58 | −0.26 | no | 55 | 0.97 |
+| 019 D | 18–25 Jun (7 d) | 0.33 | 0.96 | 0.22 | 0.92 | 1.68 | 0.74 | no | 39 | 1.01 |
+| 019 D | 25 Jun–7 Jul | 0.47 | 0.97 | 0.64 | 0.96 | −0.32 | −0.14 | **yes** | 45 | 0.99 |
+| 019 D | 7–19 Jul | 0.82 | 0.98 | 0.48 | 0.94 | 2.63 | 1.16 | no | 60 | 1.53 |
+| 019 D | 19–31 Jul | 0.94 | 0.98 | 0.59 | 0.96 | 2.32 | 1.02 | no | 80 | 0.92 |
+| 019 D | 31 Jul–12 Aug | 0.79 | 0.98 | 0.60 | 0.96 | 0.61 | 0.27 | no | 110 | 1.04 |
+| 019 D | 12–24 Aug | 0.35 | 0.91 | 0.05 | 0.80 | 2.03 | 0.90 | no | 59 | 0.92 |
+| 019 D | 24 Aug–5 Sep | 0.31 | 0.31 | 0.03 | 0.03 | −0.93 | −0.41 | no | 64 | 1.19 |
+| 085 A | 10–22 Jun | 0.32 | 0.41 | 0.25 | 0.36 | 0.14 | 0.06 | no | 25 | 1.17 |
+| 085 A | 22–29 Jun (7 d) | 0.33 | 0.34 | 0.15 | 0.32 | 0.41 | 0.18 | no | 15 | 1.10 |
+| 085 A | 29 Jun–11 Jul | 0.60 | 0.61 | 0.59 | 0.53 | −0.38 | −0.17 | no | 41 | 1.03 |
+| 085 A | 11–23 Jul | 0.36 | 0.46 | 0.35 | 0.59 | 0.01 | 0.01 | no | 28 | 1.66 |
+| 085 A | 23 Jul–4 Aug | 0.43 | 0.47 | 0.46 | 0.56 | 0.78 | 0.34 | no | 29 | 0.86 |
+| 085 A | 4–16 Aug | 0.37 | 0.45 | 0.44 | 0.55 | 0.12 | 0.05 | no | 34 | 0.79 |
+| 085 A | 16–28 Aug | 0.29 | 0.32 | 0.16 | 0.07 | −0.16 | −0.07 | no | 123 | 1.20 |
+| 085 A | 28 Aug–9 Sep | 0.30 | 0.30 | 0.11 | 0.08 | −1.77 | −0.78 | no | 26 | 1.19 |
+| 121 D | 1–13 Jun | 0.32 | 0.75 | 0.17 | 0.63 | −0.56 | −0.25 | no | 69 | 1.22 |
+| 121 D | 13–25 Jun | 0.35 | 0.83 | 0.30 | 0.66 | 0.28 | 0.13 | no | 102 | 0.74 |
+| 121 D | 25 Jun–2 Jul (7 d) | 0.35 | 0.75 | 0.41 | 0.63 | −0.81 | −0.36 | no | 34 | 0.98 |
+| 121 D | 2–14 Jul | 0.69 | 0.87 | 0.73 | 0.69 | −0.45 | −0.20 | **yes** | 71 | 0.84 |
+| 121 D | 14–26 Jul | 0.79 | 0.78 | 0.23 | 0.53 | 1.00 | 0.44 | no | 52 | 1.34 |
+| 121 D | 26 Jul–7 Aug | 0.84 | 0.82 | 0.42 | 0.56 | 1.38 | 0.61 | no | 53 | 0.90 |
+| 121 D | 7–19 Aug | 0.38 | 0.78 | 0.05 | 0.65 | −1.43 | −0.63 | no | 57 | 1.57 |
+| 121 D | 19–31 Aug | 0.31 | 0.30 | 0.22 | 0.02 | 1.23 | 0.54 | no | 48 | 1.06 |
+
+Values in unreadable rows are shown for the record only and are not results.
+
+- **The two readable pairs:** 25 Jun–7 Jul (track 19), phase step equivalent to 0.14 cm along the line of sight, with 27 of 45 readable controls at or above it; 2–14 Jul (track 121), 0.20 cm, with 34 of 71 at or above. Neither stands out. NISAR also shows no step in 2–14 Jul (section 2), so the two satellites agree for that pair.
+- **The pair in the table shown as consistency 0.60 and not readable** (track 19, 31 Jul–12 Aug) has consistency 0.597. The rule was applied as written.
+- **Track 85 (ascending):** the west-block reference is never readable (reference consistency 0.07–0.59), so no pair on this track can be read with the fixed reference. The rule was not changed to find another reference.
+- **Track 121:** the reference is readable only up to 14 Jul and in 7–19 Aug.
+- **Track 19, 7 Jul–12 Aug:** coherence on the patch is high (0.79–0.94, 64th–86th percentile of the control boxes) and the reference is good, but the patch phase is not uniform enough to read (consistency 0.48–0.60).
+- **From 12 Aug:** patch coherence falls to 0.31–0.38 on all tracks and consistency to 0.03–0.22. After the collapse the west block is lost too.
+
+What this does and does not show:
+
+- Sentinel-1 neither confirms nor contradicts the NISAR step of 14–26 Jul. No Sentinel-1 pair covering those dates is readable on the patch.
+- It adds no measurement inside NISAR's gap (27 Jul – 10 Aug) or in the last days before the collapse.
+- Interpretation, not a result: a phase step equivalent to about 5 cm at NISAR's wavelength is about 12 rad at Sentinel-1's, nearly two full cycles. If the movement was uneven across the patch, the Sentinel-1 phase would be mixed inside it, which is what low consistency with high coherence looks like. This was not tested, and the viewing directions also differ (tracks 19 and 121 look from the other side).
+
+Reading check (`scripts/s1_readcheck.py`, one product per track, reads only): map projection UTM 45N and 20 m pixels in all files; phase, coherence and height files share one grid; the product's height model gives a patch median of 5041, 5053 and 5048 m on the three tracks, so all three sample the same ground; Sentinel-1 coherence correlates with the NISAR 14–26 Jul coherence best at a shift of zero or one pixel, with no gain over zero shift (r = 0.18, 0.24, 0.35); phase is in radians; 141 of 141 patch pixels valid in every pair.
+
+Not checked: whether the patch is in layover or shadow in each Sentinel-1 view; whether the wrapped-phase file uses the same sign convention as the unwrapped one (the product notes define positive as away from the satellite for unwrapped phase) — the result above does not depend on sign; the filtering HyP3 applies to the wrapped phase; unwrapped phase and the full-resolution radar-geometry file, both unused.
