@@ -58,7 +58,7 @@ Catalogue scripts use only public endpoints. Scripts marked "login" read NISAR s
 
 | Script | Purpose |
 |---|---|
-| `cmr.py`, `pk.py` | Granule counts and repeat stacks: global, Pakistan |
+| `cmr.py` | Granule counts and repeat stacks, global |
 | `glac.py`, `events.py` | Coverage at 16 glaciers; coverage around the Langtang and Juneau events |
 | `gcovsheet.py`, `glacbrowse.py` | Contact sheets from public browse images |
 | `nisar_io.py`, `utm.py` | Remote HDF5 reads over HTTPS; UTM and polar stereographic transforms |

@@ -19,3 +19,11 @@ scripts/crop2.py
 previews/sheet_*.png
 previews/stack_*.png
 quetta_meta.json
+
+# Other Pakistan exploration: kept locally, not published
+previews/gcovsheet_hunza_shishper.png
+previews/gcovsheet_karachi.png
+previews/gcovsheet_lahore.png
+previews/gcovsheet_manchar.png
+previews/gcovsheet_sukkur.png
+scripts/pk.py
