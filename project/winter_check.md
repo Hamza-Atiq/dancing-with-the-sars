@@ -28,6 +28,10 @@ In nine winter pairs (28 Nov 2025 – 16 Mar 2026) the patch shows steps of 0.2�
 - A pair has a **snow change** if the fraction changes by 0.3 or more on either box.
 - Reported: which pairs have a snow change, and whether those are the pairs with the larger steps (the four above the controls' 95% level). No verdict beyond that, because a snow-covered surface can also change phase without a visible change in the snow mask.
 
+**D. Weather-model delay (added the same day, after seeing that the GUNW metadata holds `hydrostaticTroposphericPhaseScreen` and `wetTroposphericPhaseScreen`, before running anything).** For each pair, model step = (hydrostatic + wet screen at the patch) − (same at the west block), each interpolated from the metadata cube at the box centre and its DEM median height. The product's own sign convention is used: corrected step = observed − model.
+- In a pair, the model **explains** the step if |corrected| < half |observed|.
+- Verdict: 5 or more of nine = **yes**; 2–4 = **partly**; 0–1 = **no**. The model's size is also reported, since a model step much smaller than the observed one means the weather model cannot be the cause, whatever the sign convention.
+
 ## What the outcome would mean
 
 If A or B explains the steps, the winter observation is an artefact and the July step stands alone. If neither does and C shows no change, the steps remain unexplained and slow movement stays possible; it would still not be shown.
