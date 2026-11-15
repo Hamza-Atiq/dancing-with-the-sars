@@ -178,6 +178,7 @@ The Langtang flag survives every variant except a larger minimum flag size (80 p
 3. Anomaly image opacity and resolution, for display only. No effect on numbers.
 4. Per-pair control ranking added after the winter values appeared (section 2), to put them in context. No detector setting was changed after the year-long run.
 5. Sentinel-1 (section 7): no rule was changed after the first run on real data. The script ran once, unedited.
+6. Sentinel-1 brightness (section 8): the 2026 rules were not changed. A 2025 run of the same measurement was added after the 2026 table was seen, to test whether the June–July brightening is seasonal. It is.
 
 Provenance of item 1 and of "no change after the year-long run": this is the project's own record. The shipped JSON files hold only the final settings, and git does not prove the order either: the commit intended to capture the freeze did not include `pipeline/params.json`, so the frozen file first appears in commit `4eb4ad5` together with the year-long results. What can be checked: section 1 lists the calibration trials with their outputs, the sensitivity table in section 5 shows what the original setting (two quiet earlier pairs) gives on the full year (184 flags, none on Langtang), and Codex's independent recomputation used the frozen file.
 
@@ -232,3 +233,31 @@ What this does and does not show:
 Reading check (`scripts/s1_readcheck.py`, one product per track, reads only): map projection UTM 45N and 20 m pixels in all files; phase, coherence and height files share one grid; the product's height model gives a patch median of 5041, 5053 and 5048 m on the three tracks, so all three sample the same ground; Sentinel-1 coherence correlates with the NISAR 14–26 Jul coherence best at a shift of zero or one pixel, with no gain over zero shift (r = 0.18, 0.24, 0.35); phase is in radians; 141 of 141 patch pixels valid in every pair.
 
 Not checked: whether the patch is in layover or shadow in each Sentinel-1 view; whether the wrapped-phase file uses the same sign convention as the unwrapped one (the product notes define positive as away from the satellite for unwrapped phase) — the result above does not depend on sign; the filtering HyP3 applies to the wrapped phase; unwrapped phase and the full-resolution radar-geometry file, both unused.
+
+## 8. Sentinel-1 brightness of the patch (`scripts/s1_rtc.py`) — 15 Nov 2026
+
+Ready-made NASA product OPERA RTC-S1 (Sentinel-1 backscatter, 30 m, VV), 17 dates per track, 1 May – 11 Nov 2026. Rules were written in the script before any file was opened: the same 141 patch pixels, only pixels the product's own mask calls valid, median brightness in dB, change between consecutive dates on one track, the same control boxes, "stands out" = at or above the 95th percentile of controls. Output: `data/rtc/rtc_patch_table.txt` (local).
+
+**Viewing geometry (from the product mask).** Track 19: 99% of the patch is validly seen. Track 121: 89% (6% shadow). **Track 85: 100% of the patch is in layover**, so this track cannot see the patch at all. This explains why track 85 is unreadable in section 7 and closes the layover question left open there for all three tracks.
+
+**The last pass before the collapse shows nothing unusual in brightness.**
+
+| Track | Pair | Patch brightness (dB) | Change (dB) | Controls at or above | Control 95th pct (dB) |
+|---|---|---|---:|---:|---:|
+| 019 D | 31 Jul–12 Aug | −6.74 → −6.48 | +0.27 | 143 of 261 | 0.89 |
+| 019 D | 12–24 Aug (24 Aug is 50 h before the collapse) | −6.48 → −6.24 | +0.24 | 91 of 266 | 0.62 |
+| 121 D | 26 Jul–7 Aug | −7.14 → −7.16 | −0.02 | 206 of 214 | 0.75 |
+| 121 D | 7–19 Aug | −7.16 → −7.04 | +0.12 | 157 of 214 | 0.78 |
+
+**Across the collapse the patch goes dark, and nothing else does.**
+
+| Track | Pair | Patch brightness (dB) | Change (dB) | Controls at or above | Control maximum (dB) |
+|---|---|---|---:|---:|---:|
+| 019 D | 24 Aug–5 Sep | −6.24 → −18.26 | −12.02 | 0 of 263 | 1.79 |
+| 121 D | 19–31 Aug | −7.04 → −17.64 | −10.60 | 0 of 214 | 1.88 |
+
+The patch stays near −18 dB on every later date to November. In 2025 the same pairs of weeks show changes of −0.29 and +0.11 dB. This is a second satellite, and a second kind of measurement, placing the patch on ground that changed completely in the collapse; it agrees with the location check and with section 4. It also bounds the time: on 24 Aug the patch still had its normal summer brightness.
+
+**A June–July brightening was seen and is seasonal.** In 2026 the patch brightened from −15.2 dB (6 Jun) to −6.7 dB (31 Jul) on track 19 and stood out from the controls in four consecutive pairs (18 Jun–31 Jul); track 121 shows the same. Before treating this as a sign of the coming collapse, the same measurement was run unchanged on 2025, with the test stated first (seasonal if the 2025 rise is at least half the 2026 one). 2025: −12.0 dB (11 Jun) to −6.7 dB (29 Jul) on track 19, −14.1 to −6.8 dB on track 121, then the same plateau near −7 dB until late September. **The rise is seasonal** (most likely snow melting off the slope) and is not evidence of the collapse. It came about three weeks later in 2026 than in 2025; no meaning is attached to that.
+
+Limits: brightness shows large surface changes, not centimetres of movement, so a quiet 24 Aug does not contradict movement reported by others. The controls cover all heights, so "stands out" can also mean "melts at a different time", as the 2025 check showed. The 2025 run was added after seeing the 2026 table (recorded in the script).

@@ -71,6 +71,8 @@ Expectations, not results: Sah reports track 19 sees 44% of a 500 m disc at 71°
 
 Result: Sentinel-1 gives no new data point. No pair ending after 14 Jul is readable on the patch on any track. Two early pairs are readable (25 Jun–7 Jul on track 19, 2–14 Jul on track 121); both show a phase step equivalent to 0.1–0.2 cm along the line of sight, which about half the controls match or exceed. Track 85 cannot be read at all with the fixed reference. On track 19 the patch stays coherent through July (0.79–0.94) but its phase is too mixed to read. Sentinel-1 therefore neither confirms nor contradicts the NISAR step of 14–26 Jul, and it does not fill NISAR's gap. Full table, reading check and limits: `project/results.md` section 7.
 
+**Brightness check with OPERA RTC-S1 (15 Nov).** The ready-made Sentinel-1 backscatter product was measured on the patch for 2026 and 2025 (`scripts/s1_rtc.py`; `project/results.md` section 8). Track 85 has the patch 100% in layover. On 24 Aug, 50 h before the collapse, the patch brightness was normal. Across the collapse it fell by 12.0 dB (track 19) and 10.6 dB (track 121); no control did. A June–July brightening repeats in 2025 and is seasonal.
+
 ### Other archives at the point
 
 | Dataset | Result |
