@@ -34,3 +34,23 @@ Amplitude of each image. Square windows of 48 × 48 pixels (240 m) on a grid eve
 - The published 0.96 m is a comparison only; nothing is tuned to reach it.
 
 Script: `scripts/gap_check.py`.
+
+## Results (run once, 15 Nov 2026; `data/gap/gap_check_table.txt`)
+
+Patch: 2,256 pixels at 5 m (the 141 pixels at 20 m). Reference: 8,160 pixels.
+
+| Pair | Phase, 10 m: step (rad), consistency patch / ref | Phase, 20 m: step, consistency | Patch area coherent at 10 m | Offsets: patch points, east / north (m), size ± uncertainty | Percentile among controls | Control 95th pct |
+|---|---|---|---:|---|---:|---:|
+| 2–14 Jul | +0.20, 0.45 / 0.68 | +0.17, 0.63 / 0.85 | 37% | 76, +0.30 / +0.13, 0.32 ± 0.08 | 28 | 5.7 m |
+| 14–26 Jul | −2.85, 0.64 / 0.68 | −2.78, 0.76 / 0.86 | 78% | 91, +0.09 / +0.39, 0.40 ± 0.03 | 52 | 4.1 m |
+| **26 Jul – 19 Aug** | −0.11, 0.24 / 0.61 | +0.13, 0.22 / 0.79 | 51% | 94, −0.22 / −0.26, 0.34 ± 0.09 | 34 | 5.0 m |
+| 19–31 Aug | +1.20, 0.06 / 0.04 | +0.83, 0.09 / 0.08 | 1% | 0 (too few) | | 15.1 m |
+
+**Outcomes as defined above:**
+
+- **Method 1 check passes.** The GSLC images, a different product from the GUNW interferogram, give −2.78 rad for 14–26 Jul at 20 m (GUNW: −2.91 rad) and −2.85 rad at 10 m. This is an independent reproduction of the July step from the full-resolution images.
+- **Method 1, target: no value.** 26 Jul – 19 Aug is not readable at 10 m or 20 m (patch consistency 0.24 and 0.22). Half the patch is coherent at 10 m, so the images still match locally; the phase changes from place to place inside the patch (median 0.75 rad between neighbouring 10 m cells, against 0.52 in 14–26 Jul). That fits uneven movement inside the patch, but noise is not excluded, and no amount is read from it.
+- **Method 2: not distinguishable.** The patch's apparent shift is 0.34 ± 0.09 m, ordinary among the controls (34th percentile), and not 3 times its 14–26 Jul value. Upper bound: **about 0.5 m of apparent map shift** in 24 days.
+- **Noise level of the offsets:** in 2–14 Jul and 14–26 Jul, when phase shows at most about 6 cm, the same tracking gives 0.32 and 0.40 m. So shifts below about 0.4 m cannot be seen with this method on this patch.
+
+**Reading.** At 5 m the blind 24 days stay blind: the phase cannot be read and the offsets show nothing above their noise. A shift of about 0.5 m or more of the patch as a whole would probably have shown. A preprint quotes 0.96 m in these 24 days from NISAR offsets (read only through a secondary summary); our result is in some tension with that figure, but the measurements differ (their area, window and product are not known to us; ours is an apparent map shift of this 0.056 km² patch). We do not claim either is wrong.
