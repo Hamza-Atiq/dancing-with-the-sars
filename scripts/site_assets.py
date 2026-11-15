@@ -6,6 +6,7 @@ Everything is drawn from the project's own extracts and result files:
   data/site/optical_*.npz             HLS Sentinel-2 true colour, 30 m (scripts/site_optical.py)
   docs/data/*.json                    results written by pipeline/build.py
   data/s1/s1_patch.json               Sentinel-1 patch measurements (optional; scripts/s1_patch.py)
+  data/rtc/rtc_patch.json             Sentinel-1 patch brightness (optional; scripts/s1_rtc.py)
 Output: docs/story/*.webp and docs/story/story.json
 
 Run: C:/Users/HP/anaconda3/python.exe scripts/site_assets.py
@@ -208,6 +209,26 @@ def story(meta):
             passes[names.get(k.split('|')[1], k)] = sorted(x[0].replace('-', '') for x in v)
     desc = [d for d in s.get('descending', [])]
     s1f = ROOT / 'data/s1/s1_patch.json'
+    rtc = None                                   # Sentinel-1 brightness (scripts/s1_rtc.py), optional
+    rf = ROOT / 'data/rtc/rtc_patch.json'
+    if rf.exists():
+        R = json.loads(rf.read_text())
+        day = '20260826'                         # collapse date
+        prs = [r for r in R if 'start' in r and r.get('change_db') is not None]   # tracks that see the patch
+        slim = lambda r: {'track': r['track'], 'start': r['start'], 'end': r['end'],
+                          'change_db': round(r['change_db'], 2), 'controls_n': r['controls'],
+                          'controls_at_or_above': r['controls_at_or_above'],
+                          'control_max_db': round(r['control_max_db'], 2)}
+        before = max((r for r in prs if r['end'] < day), key=lambda r: r['end'])
+        ser = {}
+        for r in prs:
+            t = ser.setdefault(r['track'], {})
+            t[r['start']], t[r['end']] = round(r['patch_db_start'], 2), round(r['patch_db_end'], 2)
+        rtc = {'before': slim(before),
+               'series': {k: sorted(v.items()) for k, v in ser.items()},
+               'across': [slim(r) for r in prs if r['start'] < day <= r['end']],
+               'layover_tracks': [g['geometry']['track'] for g in R
+                                  if 'geometry' in g and g['geometry']['patch_layover_pct'] >= 99.5]}
     out = {
         'generated_from': 'docs/data (pipeline/build.py), data/s1 (scripts/s1_patch.py)',
         'collapse_utc': s['collapse_utc'],
@@ -230,6 +251,7 @@ def story(meta):
         'passes': passes,
         'descending_pairs': len(desc),
         'sentinel1': json.loads(s1f.read_text()) if s1f.exists() else None,
+        'sentinel1_brightness': rtc,
         'images': meta,
     }
     (OUT / 'story.json').write_text(json.dumps(out, separators=(',', ':')))

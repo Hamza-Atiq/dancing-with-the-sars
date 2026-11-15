@@ -108,7 +108,9 @@
 
   /* ---- 361 controls vs Langtang ---- */
   function controls(D) {
-    var k = D.key_pair, W = 1000, H = 270, L = 12, R = 60, base = 225;
+    var tall = {}, top = 0;                          /* tallest column decides the height, so no dot leaves the chart */
+    D.controls_cm.forEach(function (v) { var b = Math.round(v / 0.06); tall[b] = (tall[b] || 0) + 1; top = Math.max(top, tall[b]); });
+    var k = D.key_pair, W = 1000, L = 12, R = 60, base = Math.max(225, 7 + (top - 1) * 6.4 + 12), H = base + 45;
     var s = svg($('ch-controls'), W, H), max = 6.2;
     var x = function (v) { return L + v / max * (W - L - R); };
     s.appendChild(el('line', { x1: L, x2: W - R, y1: base, y2: base, class: 'axis' }));
@@ -204,20 +206,65 @@
   function sentinel(D) {
     var host = $('s1-slot'), S = D.sentinel1;
     if (!S || !S.length) {
-      host.appendChild(html('div', 'slot-in', '<h3>Sentinel-1: results pending</h3><p>We ordered 24 Sentinel-1 image pairs covering June to early September 2026 and are measuring the same patch in them with the same rules, fixed before we looked. The numbers will appear here, whatever they show.</p>'));
+      host.appendChild(html('div', 'slot-in', '<h3>Sentinel-1: results pending</h3><p>The same patch, measured with the same rules in 24 Sentinel-1 pairs. The numbers will appear here, whatever they show.</p>'));
       return;
     }
-    var t19 = S.filter(function (r) { return r.track && !r.error; });
-    var res = t19.filter(function (r) { return r.resolved; });
-    var rowsHtml = t19.map(function (r) {
-      return '<tr><td>' + r.track + '</td><td>' + pairLabel(r.start + '_' + r.end) + '</td><td>' + (r.patch_median_coherence == null ? 'no view' : r.patch_median_coherence.toFixed(2)) + '</td><td>' +
-        (r.resolved ? Math.abs(r.los_cm).toFixed(1) + ' cm' : 'unreadable') + '</td></tr>';
-    }).join('');
-    host.appendChild(html('div', 'slot-in', '<h3>Sentinel-1: ' + (res.length ? res.length + ' of ' + t19.length + ' pairs readable on the patch' : 'the patch is unreadable in all ' + t19.length + ' pairs') + '</h3>' +
-      '<p>Same patch, same rules as for NISAR, fixed before we opened the data. Sentinel-1 uses a wave four times shorter, so it loses its reading sooner on rough, fast-changing ground.</p>' +
-      (res.length ? '<p>' + (res.every(function (r) { return r.controls_at_or_above / r.controls_resolved >= 0.25; }) ?
-        'The readable pairs are early and small: ' + res.map(function (r) { return r.controls_at_or_above + ' of ' + r.controls_resolved; }).join(' and ') + ' comparison patches elsewhere show as much or more. ' : '') +
-        'Sentinel-1 gives no reading on the patch in the pairs that cover late July and August, so it neither confirms nor contradicts what NISAR saw, and it does not fill the gap.</p>' : '') +
-      '<table><thead><tr><th>Track</th><th>Pair, 2026</th><th>Signal quality on patch</th><th>Step</th></tr></thead><tbody>' + rowsHtml + '</tbody></table>'));
+    var all = S.filter(function (r) { return r.track && !r.error; });
+    var res = all.filter(function (r) { return r.resolved; });
+    var box = html('div', 'slot-in', '<h3>Sentinel-1: ' + (res.length ? res.length + ' of ' + all.length + ' pairs readable on the patch' : 'the patch is unreadable in all ' + all.length + ' pairs') + '</h3>');
+    var fig = html('div', 'chart inslot'); box.appendChild(fig);
+    /* one bar per pair, on a time axis; filled = readable */
+    var tracks = []; all.forEach(function (r) { if (tracks.indexOf(r.track) < 0) tracks.push(r.track); });
+    var W = 1000, rowH = 46, T = 30, L = 110, R = 16, H = T + tracks.length * rowH + 30;
+    var t0 = date('20260601'), t1 = date('20260915'), col = new Date(D.collapse_utc);
+    var x = function (d) { return L + (d - t0) / (t1 - t0) * (W - L - R); };
+    var s = svg(fig, W, H);
+    ['20260601', '20260701', '20260801', '20260901'].forEach(function (d) { s.appendChild(el('text', { x: x(date(d)), y: H - 6 }, MONTHS[+d.slice(4, 6) - 1])); s.appendChild(el('line', { x1: x(date(d)), x2: x(date(d)), y1: T - 12, y2: H - 24, class: 'axis' })); });
+    all.forEach(function (r) {
+      var yy = T + tracks.indexOf(r.track) * rowH, a = x(date(r.start)), b = x(date(r.end));
+      s.appendChild(el('rect', { x: a + 2, y: yy, width: b - a - 4, height: 20, rx: 3, fill: r.resolved ? '#86b7c9' : 'none', stroke: r.resolved ? '#86b7c9' : 'currentColor', 'stroke-opacity': r.resolved ? 1 : .45 }));
+      if (r.resolved) s.appendChild(el('text', { x: (a + b) / 2, y: yy + 36, 'text-anchor': 'middle', class: 'lab' }, Math.abs(r.los_cm).toFixed(1) + ' cm'));
+    });
+    tracks.forEach(function (t, i) { s.appendChild(el('text', { x: 0, y: T + i * rowH + 15 }, 'track ' + t)); });
+    s.appendChild(el('line', { x1: x(col), x2: x(col), y1: 6, y2: H - 24, stroke: '#f0a63a', 'stroke-width': 2 }));
+    s.appendChild(el('text', { x: x(col) + 7, y: 16, class: 'lab' }, 'collapse'));
+    s.setAttribute('aria-label', all.length + ' Sentinel-1 pairs on ' + tracks.length + ' tracks; ' + res.length + ' are readable on the patch.');
+    var last = res.map(function (r) { return r.end; }).sort().pop();
+    box.appendChild(html('p', '', 'Each bar is one pair of passes. Filled: readable. Same patch and same rules as NISAR, fixed before we opened the data. ' +
+      (last ? 'No pair ending after ' + dm(last) + ' can be read, so Sentinel-1 neither confirms nor contradicts NISAR.' : 'Sentinel-1 neither confirms nor contradicts NISAR.')));
+    host.appendChild(box);
+    brightness(D, host);
+  }
+
+  /* ---- Sentinel-1 brightness (OPERA RTC-S1): numbers come from story.json, built from data/rtc/rtc_patch.json ---- */
+  function brightness(D, host) {
+    var B = D.sentinel1_brightness;
+    if (!B || !B.before || !B.across.length || !B.series) return;
+    var db = function (v) { return Math.abs(v).toFixed(1) + ' dB'; };
+    var ctrlMax = Math.max.apply(null, B.across.map(function (r) { return r.control_max_db; }));
+    var box = html('div', 'slot-in second', '<h3>A different measurement: how bright the patch looks</h3>');
+    var fig = html('div', 'chart inslot'); box.appendChild(fig);
+    var names = Object.keys(B.series), W = 1000, H = 300, L = 46, R = 16, T = 24, Bm = 40, lo = -20, hi = -4;
+    var ds = []; names.forEach(function (n) { B.series[n].forEach(function (p) { ds.push(p[0]); }); }); ds.sort();
+    var t0 = date(ds[0]), t1 = date(ds[ds.length - 1]), col = new Date(D.collapse_utc);
+    var x = function (d) { return L + (d - t0) / (t1 - t0) * (W - L - R); };
+    var y = function (v) { return T + (hi - v) / (hi - lo) * (H - T - Bm); };
+    var s = svg(fig, W, H), cols = ['#86b7c9', '#f1f3f2'];
+    [-20, -16, -12, -8, -4].forEach(function (v) { s.appendChild(el('line', { x1: L, x2: W - R, y1: y(v), y2: y(v), class: 'axis' })); s.appendChild(el('text', { x: L - 8, y: y(v) + 4, 'text-anchor': 'end' }, v + (v === -4 ? ' dB' : ''))); });
+    for (var m = new Date(Date.UTC(t0.getUTCFullYear(), t0.getUTCMonth() + 1, 1)); m < t1; m = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth() + 1, 1))) s.appendChild(el('text', { x: x(m), y: H - Bm + 20 }, MONTHS[m.getUTCMonth()]));
+    names.forEach(function (n, i) {
+      var pts = B.series[n].map(function (p) { return [x(date(p[0])), y(Math.max(lo, Math.min(hi, p[1])))]; });
+      s.appendChild(el('polyline', { fill: 'none', stroke: cols[i % 2], 'stroke-width': 2, points: pts.map(function (p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' ') }));
+      pts.forEach(function (p) { s.appendChild(el('circle', { cx: p[0], cy: p[1], r: 3.5, fill: cols[i % 2] })); });
+      s.appendChild(el('line', { x1: L + 14, x2: L + 38, y1: T + 10 + i * 18, y2: T + 10 + i * 18, stroke: cols[i % 2], 'stroke-width': 2 }));
+      s.appendChild(el('text', { x: L + 44, y: T + 14 + i * 18 }, 'track ' + n));
+    });
+    s.appendChild(el('line', { x1: x(col), x2: x(col), y1: 4, y2: H - Bm, stroke: '#f0a63a', 'stroke-width': 2 }));
+    s.appendChild(el('text', { x: x(col) - 7, y: 14, 'text-anchor': 'end', class: 'lab' }, 'collapse'));
+    s.appendChild(el('text', { x: x(col) + 12, y: y(-12.5), class: 'lab' }, B.across.map(function (r) { return db(r.change_db); }).join(' and ') + ' darker'));
+    s.setAttribute('aria-label', 'Radar brightness of the patch on ' + names.length + ' Sentinel-1 tracks through 2026. It drops sharply across the collapse.');
+    box.appendChild(html('p', '', 'Ordinary 50 hours before the collapse: a change of ' + db(B.before.change_db) + ', matched or beaten by ' + B.before.controls_at_or_above + ' of ' + B.before.controls_n + ' comparison patches. ' +
+      'Across the collapse no comparison patch changed by more than ' + db(ctrlMax) + '. The rise in June and July repeats in 2025, so it is the season. Brightness shows large surface change, not centimetres of movement.'));
+    host.appendChild(box);
   }
 })();

@@ -34,6 +34,14 @@ These are results recorded in the project's analysis, not a completed reconstruc
 
 The 361 controls above are readable in the July pair alone. A separate comparison uses 289 controls readable in both July pairs; these are different selection criteria.
 
+![The Langtang patch shows 5.6 cm in the 14 to 26 July pair; 361 comparable slopes stay below 2.6 cm](previews/readme_controls.svg)
+
+![Step on the patch in every radar pair from November 2025 to October 2026; only the 14 to 26 July pair is large](previews/readme_year.svg)
+
+![Sentinel-1 brightness of the patch: ordinary 50 hours before, 12.0 dB and 10.6 dB darker after the collapse](previews/readme_brightness.svg)
+
+The three charts are drawn from the result files by `scripts/readme_figures.py`.
+
 Our experimental detector generated **270 flags over 22 evaluated pairs**, including two flag regions on the Langtang slope in one July pair. **The other 268 flags are unverified.** They are not confirmed hazards or confirmed false alarms. The detector was adjusted using Langtang, so its success on this case is not independent validation.
 
 ## What is missing
