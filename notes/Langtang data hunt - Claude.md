@@ -90,8 +90,18 @@ Result: Sentinel-1 gives no new data point. No pair ending after 14 Jul is reada
 ### Partner resources in the challenge list
 
 - **RADARSAT-1** ended in 2013; ASF holds none at this point.
-- **RCM**: open data is mainly over Canada through EODMS, which needs its own account. Not searched for Nepal.
-- **SAOCOM** (L-band): open registration covers archive images over Argentina. The catalogue was not searched for Nepal; it needs a CONAE login.
+- **RCM**: open data is mainly over Canada through EODMS, which needs its own account. Search attempted 15 Nov 2026 with the user's login (RCM Image Products, 1 Jun–30 Sep 2026, point 28.28858 N 85.52701 E): the server failed with "WES-2253 Unable to load search form", server message "Java heap space"; its REST API returned HTTP 500 for every query. No result either way. Retry later.
+- **SAOCOM** (L-band): open registration covers archive images over Argentina. The catalogue (catalog.saocom.conae.gov.ar/catalog) can be searched without a login; downloads need registration, an agreement with CONAE and a signed licence (all results show a lock).
+  Searched 15 Nov 2026, 1 Jun–30 Sep 2026, hand-drawn box of 7,420 km² around Langtang (much larger than the patch; footprints over the patch itself were NOT checked). 21 results, 20 read (one not loaded):
+  - 28 Jun 00:15 UTC, SAOCOM-1A, Stripmap S4, HH+HV, ascending (2 frames)
+  - 11 Jul 00:05, 1B, TOPSAR TNB, quad-pol, ascending (2)
+  - 20 Jul 12:20, 1A, TOPSAR TNA, quad-pol, descending (2)
+  - 30 Jul 00:15, 1A, Stripmap S5, HH+HV, ascending (3) — the only date inside 26 Jul–26 Aug
+  - 28 Aug 00:05, 1B, TOPSAR TNA, quad-pol, ascending (2 L1A + 2 L1D) — about 45 h after the collapse
+  - 8 Sep 00:11 and 13 Sep 00:05, 1B, TOPSAR TNB, quad-pol, ascending (2 each)
+  - 22 Sep 12:20, 1A, TOPSAR TNA, quad-pol, descending (3)
+  With the default "last 60 days" filter the same box also listed Stripmap S5 ascending frames on 3 Nov 2026 00:15 (12 results in total, not all read).
+  Reading (Claude's inference from dates and modes only, baselines unknown): no two images of the same mode both fall before the collapse inside the gap, so SAOCOM cannot give a movement measurement for 26 Jul–26 Aug. Same-mode pairs that exist all span the collapse (11 Jul–13 Sep TNB; 20 Jul–22 Sep TNA; 30 Jul–3 Nov S5).
 - Commercial data named by others (Planet, Pléiades, WorldView, PowerChina-1) is not open. Post-event WorldView DEMs are on Zenodo (record 22842746).
 
 ## 4. What this changes
