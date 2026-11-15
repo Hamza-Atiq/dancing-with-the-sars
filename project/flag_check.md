@@ -47,7 +47,7 @@ All 205 HLS scenes used come from one tile (T45RUM). 268 flags are not on Langta
 
 - **Only 65 of 268 flags (24%) could be classed** with a clear image on both dates. Cloud is the main reason: most monsoon flags (June–September) have no usable image, and steep shaded slopes are often marked as shadow.
 - **Of the 65:** 28 are snow-covered or had a snow change (43%); 32 were snow-free on both dates (49%); 5 mixed.
-- **Lasting ice/snow:** 144 of the 268 flags lie where the autumn 2025 image shows snow or ice (the stand-in for glacier and permanent snow); 112 do not; 12 have no clear autumn image.
+- **Lasting ice/snow:** 144 of the 268 flags lie where the autumn 2025 image shows snow or ice (the stand-in for glacier and permanent snow); 91 do not; 33 have no clear autumn image.
 - **The 32 snow-free flags** are the shortlist that could be ground movement or air effects. 15 of them are in one pair, 6–18 Oct 2026 (the first clear pair after the monsoon), 5 in 27 May – 8 Jun. They are not checked further here and are not called movement.
 - The two Langtang flags (14–26 Jul) have no usable image: monsoon cloud. The method could not have checked them either.
 
