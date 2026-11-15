@@ -8,3 +8,14 @@ __pycache__/
 sub/
 .env
 /data/
+
+# Quetta research (paused): kept locally, not published
+Quetta*.md
+scripts/quetta.py
+scripts/stack.py
+scripts/subset.py
+scripts/subset_atm.py
+scripts/crop2.py
+previews/sheet_*.png
+previews/stack_*.png
+quetta_meta.json

@@ -43,7 +43,7 @@ Ground movement as the cause of the phase step; direction and true size; onset d
 
 ## Decisions on record
 
-- Working project: Langtang. Quetta subsidence paused (nine-pair stack dominated by atmosphere; details in `Quetta deep dive and alternatives - Claude.md`). Fallbacks: glacier speed atlas; Manchar Lake.
+- Working project: Langtang. Quetta subsidence paused (nine-pair stack dominated by atmosphere; details in `Quetta deep dive and alternatives - Claude.md`, kept locally and not in the public repository since 15 Nov). Fallbacks: glacier speed atlas; Manchar Lake.
 - Wording rules for anything public: "phase step equivalent to X cm along the line of sight", "flag" not "warning", no casualty figures, no claims about what could have been done.
 - Detector parameters are frozen (`pipeline/params.json`). Any change must be recorded in `project/results.md` section 6 with before/after numbers.
 
