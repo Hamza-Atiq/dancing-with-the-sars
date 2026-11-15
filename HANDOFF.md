@@ -36,7 +36,7 @@ Ground movement as the cause of the phase step; direction and true size; onset d
 - **Not looked at in a browser by Claude:** the filled Sentinel-1 box and the extra sentence in "More than one satellite" on the live site. Playwright did not connect this session.
 - **Challenge resource list re-read:** RCM (EODMS) and SAOCOM (CONAE) are the only listed sources still unsearched; both need the user's own accounts. Offered; the user has not registered.
 - **Local data added this session (ignored by git):** `data/s1/` (5.5 GB, 24 zips + results), `data/rtc/` and `data/rtc_2025/` (about 330 MB each). `previews/story_*.png` are untracked and uncommitted.
-- **Still open:** team member names; layover/shadow check for the patch in Sentinel-1 views; next steps list below (independent test of the frozen rule is the most valuable).
+- **Still open:** team member names; next steps list below (independent test of the frozen rule is the most valuable).
 
 ## State at the end of session 3 (15 Nov 2026) — START HERE
 
