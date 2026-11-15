@@ -33,3 +33,13 @@ Newest entries at the bottom. A new session should read `HANDOFF.md`, then `proj
 - Open decisions for the user: (1) test the frozen rule on a second, unrelated slope failure (recommended next step); (2) enable GitHub Pages on `/docs`.
 - State at this point: everything committed and pushed to `main`.
 - Codex review of the build returned: both headline numbers reproduced independently (4 flags, 2 on Langtang with 57 and 41 px; 0 of 361 controls reach 2.907 rad, control max 1.347), no numerical bug found. Record: `project/review-codex-build.md`. Applied: spec §4.2 wording (one earlier pair), spec §5 wording (result values from JSON), results.md section 6 provenance note (the freeze order is our own record; git does not prove it), app headline clarifies the 289 controls. The earlier "Codex review pending" entry above is now closed.
+
+## 15 Nov 2026 (Claude session 3) — data hunt
+
+- User asked to re-check the exact location and look for data the earlier sessions missed. Record: `Langtang data hunt - Claude.md`.
+- Location: patch centre is 44 m from Li (2026)'s centroid and 147 m from the HiRISK point. The old catalogue point (85.52 E, 28.25 N) was 4.3 km south, but NISAR queries at the right point return the same tracks and counts.
+- NISAR: nothing missed. New validated GCOV/GSLC to 11 Nov. GSLC is available for the 26 Jul – 19 Aug interval.
+- Sentinel-1: three tracks (19 D, 121 D, 85 A), five passes inside NISAR's gap and one 50.6 h before failure. Not used before.
+- `scripts/archive_survey.py` (catalogue survey) and `scripts/s1_hyp3.py` (order and fetch Sentinel-1 burst interferograms) added.
+- Blocked: ASF returns "pre-authorization required" for Sentinel-1 downloads and HyP3. The user must approve the ASF application on their Earthdata account. Nothing was submitted.
+- Next after approval: `scripts/s1_hyp3.py submit` → `status` → `download`, then measure the patch in Sentinel-1 wrapped phase against controls.

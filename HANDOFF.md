@@ -25,6 +25,14 @@ Read this first when resuming. Then `project/spec.md`, `project/plan.md`, `proje
 
 Ground movement as the cause of the phase step; direction and true size; onset date; anything about lead time or availability of products at the time; meaning of the other flags; performance anywhere else. The rule was tuned on Langtang, so its Langtang flag is not an independent detection.
 
+## Data hunt, 15 Nov (session 3) — record: `Langtang data hunt - Claude.md`
+
+- **Location confirmed.** Our patch centre is 44 m from Li (2026)'s mapped centroid and 147 m from the HiRISK position (both read from Sah's preprint).
+- **NISAR:** still only tracks 098 A and 048 D. New validated GCOV/GSLC dates to 11 Nov. No product fills the 27 Jul – 10 Aug gap. GSLC (full resolution) is unused and available.
+- **Sentinel-1 was not used before and covers the source on three tracks**, with passes on 31 Jul, 4, 7, 12, 16 Aug (inside NISAR's gap) and 24 Aug (50.6 h before failure). `scripts/s1_hyp3.py` is ready to order 24 burst interferograms from ASF HyP3.
+- **Waiting on the user:** approve the ASF application once at `https://urs.earthdata.nasa.gov/approve_app?client_id=BO_n7nTIlMljdvU6kRRB3g`, then run `python scripts/s1_hyp3.py submit`, later `status` and `download`. Then measure the patch in the Sentinel-1 wrapped phase with the session-2 method.
+- ALOS-2 ends Mar 2025 at this point; RCM and SAOCOM catalogues need their own logins and were not searched.
+
 ## Suggested next steps (none started)
 
 1. **Independent test of the frozen rule** on a second, unrelated slope failure or a known slow landslide with NISAR coverage. This is what would make the watch-list idea credible.
