@@ -37,3 +37,28 @@ Version rule as for Langtang: forward-processed `P` products first, `X` otherwis
 7. A HIT would show that the rule can flag a slope it was not tuned on. It would not show that the flag could be told apart from the others in the same pair, and one case is not a detection rate. A MISS or NOT TESTABLE is reported as plainly.
 
 Scripts: `scripts/indep_catalogue.py` (catalogue), `scripts/indep_fetch.py` (data), `scripts/indep_run.py` (rule and outcome).
+
+## Results (run once, 15 Nov 2026; `data/indep_bg/indep_result.txt`, `data/indep_bg/indep_result.json`)
+
+All 42 pairs were fetched (`P05023` from 20 Jun, `X05026` before, as for Langtang); all three tracks have 20 m grids, so the rule was applied on every track. The source zone (600 m around the scar) has about 2,830 pixels on each ascending and 149 D grid; on 048 D most of it is outside valid data until mid-August.
+
+**Outcome by the rules as written: HIT** (track 098 A). Track 149 D: MISS. Track 048 D: MISS.
+
+| Track | Pre-event pairs counted | Pairs with the zone eligible | Flag in the zone | Flags in the window (pairs with history) |
+|---|---:|---:|---|---:|
+| 098 A | 21 (15 Jan – 6 Oct) | 21 | **one, in 27 Jan – 8 Feb 2026** (91 pixels, mean 2.46 rad, centre 107 m from the scar point) | 329 in 22 pairs, median 9 |
+| 149 D | 4 (23 Aug – 10 Oct) | 4 | none | 50 in 4 pairs, median 14.5 |
+| 048 D | 3 (28 Aug – 3 Oct) | 2 | none | 33 in 4 pairs, median 7.5 |
+
+- **The only flag at the source is 8 months before the failure**, in winter. In every one of the last 20 ascending pairs (8 Feb – 6 Oct), including the last four after the monsoon, the zone was measurable and eligible (700–2,000 pixels) and **no flag was raised there**. The descending pair ending about 9 hours before the flood (28 Sep – 10 Oct, 837 eligible pixels) raised no flag at the source.
+- **The pair spanning the event (6 – 18 Oct, track 098 A)** shows zone coherence 0.30, against a median of about 0.36 in the four pairs before; this is not a collapse by rule 5, and the failure is not obvious in the coherence at this scale.
+- **The weakness of the rule as written.** Rule 4 counted any pre-event pair, however early. A flag 8 months before a failure, followed by 20 quiet pairs, is not a warning of that failure. This was not foreseen when the rules were written; the outcome is reported as "HIT" because that is what the rule says, and explained here.
+
+### Added after seeing the result: how often does chance give the same?
+
+Not part of the rules above (`scripts/indep_chance.py`, `data/indep_bg/indep_chance.json`). 2,000 zones of the same size placed at random on eligible ground of the same 098 A window (at least 2 km from the scar), same 21 counted pairs:
+
+- **42% of random zones collect at least one flag** in some counted pair. One flag in 21 pairs is what chance gives.
+- 13% of random zones collect a flag in the last four pre-event pairs; the real source collected none.
+
+**Reading.** On a slope the rule had never seen, it raised nothing before the failure that stands out from chance: one winter flag 8 months early (as likely as not for any spot of this size) and silence in the eight months before the failure, on all three tracks. **This is not an independent detection.** It does not show the rule is useless either: the Budhi Gandaki source is at 5,400–6,600 m on a snow and ice face, where any precursor may have been fast, brittle or hidden in snow; and one case is not a rate. What it does show is that the Langtang flag cannot be taken as evidence that the rule works elsewhere.
